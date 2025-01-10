@@ -18,9 +18,19 @@
             width: 300px;
         }
     </style>
+    <script>
+        // Sayfa terk edilirken veya geri tuşuna basıldığında oynatmayı durdur
+        window.addEventListener('beforeunload', () => {
+            const audioPlayer = document.querySelector('audio');
+            if (audioPlayer) {
+                audioPlayer.pause(); // Oynatmayı durdur
+                audioPlayer.currentTime = 0; // Başlangıç noktasına sıfırla
+            }
+        });
+    </script>
 </head>
 <body>
-    <audio controls>
+    <audio controls autoplay>
         <source src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3" type="audio/mpeg">
         Tarayıcınız bu ses oynatıcısını desteklemiyor.
     </audio>
