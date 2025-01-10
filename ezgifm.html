@@ -19,8 +19,16 @@
         }
     </style>
     <script>
-        // Sayfa terk edilirken veya geri tuşuna basıldığında oynatmayı durdur
-        window.addEventListener('beforeunload', () => {
+        // Sayfa görünürlüğü değiştiğinde oynatmayı durdur
+        document.addEventListener('visibilitychange', () => {
+            const audioPlayer = document.querySelector('audio');
+            if (document.hidden && audioPlayer) {
+                audioPlayer.pause(); // Oynatmayı durdur
+            }
+        });
+
+        // Sayfa tamamen kapatılırken oynatmayı sıfırla
+        window.addEventListener('unload', () => {
             const audioPlayer = document.querySelector('audio');
             if (audioPlayer) {
                 audioPlayer.pause(); // Oynatmayı durdur
