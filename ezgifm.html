@@ -17,12 +17,17 @@
         }
         .player {
             display: flex;
+            flex-direction: column;
             align-items: center;
             background-color: #333;
             border-radius: 10px;
-            padding: 10px;
+            padding: 20px;
             width: 300px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .control-buttons {
+            display: flex;
+            margin-bottom: 10px;
         }
         .play-btn, .pause-btn {
             background-color: #007BFF;
@@ -39,22 +44,39 @@
             background-color: #0056b3;
         }
         .track-title {
-            flex: 1;
+            margin: 10px 0;
             font-size: 16px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div class="player">
-        <button class="play-btn">▶</button>
-        <button class="pause-btn">⏸</button>
+        <div class="control-buttons">
+            <button class="play-btn">▶</button>
+            <button class="pause-btn">⏸</button>
+        </div>
         <div class="track-title">88.0 Ezgi FM</div>
+        <label>
+            <input type="checkbox" id="background-play-toggle">
+            Sayfadan Ayrıldığımda Çalmaya Devam Et
+        </label>
     </div>
     <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
     <script>
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
+        const backgroundPlayToggle = document.getElementById('background-play-toggle');
+        let allowBackgroundPlay = false;
 
         // Oynatma ve durdurma düğmeleri
         playButton.addEventListener('click', () => {
@@ -65,17 +87,24 @@
             audioPlayer.pause();
         });
 
-        // Sayfa görünürlüğü değiştiğinde oynatmayı durdur
+        // Kullanıcı tercihini kaydet
+        backgroundPlayToggle.addEventListener('change', (event) => {
+            allowBackgroundPlay = event.target.checked;
+        });
+
+        // Sayfa görünürlüğü değiştiğinde çalma kontrolü
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                audioPlayer.pause(); // Oynatmayı durdur
+            if (!allowBackgroundPlay && document.hidden) {
+                audioPlayer.pause();
             }
         });
 
-        // Sayfa tamamen kapatıldığında oynatmayı sıfırla
+        // Sayfa tamamen kapatıldığında oynatmayı sıfırla (eğer çalmaya devam edilmesine izin verilmezse)
         window.addEventListener('unload', () => {
-            audioPlayer.pause(); // Oynatmayı durdur
-            audioPlayer.currentTime = 0; // Başlangıç noktasına sıfırla
+            if (!allowBackgroundPlay) {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+            }
         });
     </script>
 </body>
