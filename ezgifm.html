@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>88.0 Ezgi FM</title>
+    <title>Custom Radyo Player</title>
     <style>
         body {
             margin: 0;
@@ -13,34 +13,70 @@
             height: 100vh;
             background-color: #000;
             color: #fff;
+            font-family: Arial, sans-serif;
         }
-        audio {
+        .player {
+            display: flex;
+            align-items: center;
+            background-color: #333;
+            border-radius: 10px;
+            padding: 10px;
             width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .play-btn, .pause-btn {
+            background-color: #007BFF;
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .play-btn:hover, .pause-btn:hover {
+            background-color: #0056b3;
+        }
+        .track-title {
+            flex: 1;
+            font-size: 16px;
         }
     </style>
+</head>
+<body>
+    <div class="player">
+        <button class="play-btn">▶</button>
+        <button class="pause-btn">⏸</button>
+        <div class="track-title">88.0 Ezgi FM</div>
+    </div>
+    <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
     <script>
+        const audioPlayer = document.getElementById('audio-player');
+        const playButton = document.querySelector('.play-btn');
+        const pauseButton = document.querySelector('.pause-btn');
+
+        // Oynatma ve durdurma düğmeleri
+        playButton.addEventListener('click', () => {
+            audioPlayer.play();
+        });
+
+        pauseButton.addEventListener('click', () => {
+            audioPlayer.pause();
+        });
+
         // Sayfa görünürlüğü değiştiğinde oynatmayı durdur
         document.addEventListener('visibilitychange', () => {
-            const audioPlayer = document.querySelector('audio');
-            if (document.hidden && audioPlayer) {
+            if (document.hidden) {
                 audioPlayer.pause(); // Oynatmayı durdur
             }
         });
 
-        // Sayfa tamamen kapatılırken oynatmayı sıfırla
+        // Sayfa tamamen kapatıldığında oynatmayı sıfırla
         window.addEventListener('unload', () => {
-            const audioPlayer = document.querySelector('audio');
-            if (audioPlayer) {
-                audioPlayer.pause(); // Oynatmayı durdur
-                audioPlayer.currentTime = 0; // Başlangıç noktasına sıfırla
-            }
+            audioPlayer.pause(); // Oynatmayı durdur
+            audioPlayer.currentTime = 0; // Başlangıç noktasına sıfırla
         });
     </script>
-</head>
-<body>
-    <audio controls autoplay>
-        <source src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3" type="audio/mpeg">
-        Tarayıcınız bu ses oynatıcısını desteklemiyor.
-    </audio>
 </body>
 </html>
