@@ -124,8 +124,8 @@
 <body>
     <div class="player">
         <div class="control-buttons">
-            <button class="play-btn">&#x25BA;</button> <!-- Oynatma düğmesi -->
-            <button class="pause-btn">❙❙</button> <!-- Pause düğmesi (İki Düz Çizgi) -->
+            <button class="play-btn">▶</button> <!-- Oynatma düğmesi -->
+            <button class="pause-btn">⏸</button> <!-- Durdurma düğmesi -->
         </div>
         <div class="track-title">88.0 Ezgi FM</div> <!-- Şarkı başlığı -->
         <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1"> <!-- Ses kontrolü -->
@@ -145,10 +145,7 @@
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            audioPlayer.pause(); // Oynatıcıyı durdur
-            audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
-            audioPlayer.load(); // Kaynağı yeniden yükle
-            audioPlayer.play(); // Güncel yayını başlat
+            audioPlayer.play();
         });
 
         // Durdurma düğmesine tıklandığında çalışır
