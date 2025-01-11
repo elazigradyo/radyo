@@ -13,7 +13,6 @@
             align-items: center;
             height: 100vh;
             background-color: #ffffff; /* Arka plan rengi */
-            color: #ffffff; /* Yazı rengi */
             font-family: Arial, sans-serif;
         }
 
@@ -33,7 +32,7 @@
         .control-buttons {
             display: flex;
             margin-bottom: 10px;
-            gap: 10px; /* Butonlar arasındaki boşluk */
+            gap: 15px; /* Butonlar arasındaki boşluk */
         }
 
         .play-btn, .pause-btn {
@@ -42,12 +41,19 @@
             border-radius: 50%; /* Yuvarlak düğmeler */
             width: 50px;
             height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             cursor: pointer;
-            font-size: 24px; /* İkon boyutu */
+            background-size: 50%; /* Arka plan boyutu */
+            background-position: center; /* Arka plan konumu */
+            background-repeat: no-repeat; /* Tekrarlama yok */
             transition: background-color 0.3s ease, transform 0.3s ease; /* Geçiş efekti */
+        }
+
+        .play-btn {
+            background-image: url('https://cdn-icons-png.flaticon.com/512/727/727245.png'); /* Play ikonu */
+        }
+
+        .pause-btn {
+            background-image: url('https://cdn-icons-png.flaticon.com/512/727/727243.png'); /* Pause ikonu */
         }
 
         .play-btn:hover, .pause-btn:hover {
@@ -123,14 +129,8 @@
 <body>
     <div class="player">
         <div class="control-buttons">
-            <!-- Play düğmesi -->
-            <button class="play-btn">
-                <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" alt="Play" style="width: 24px; height: 24px;">
-            </button>
-            <!-- Pause düğmesi -->
-            <button class="pause-btn">
-                <img src="https://cdn-icons-png.flaticon.com/512/727/727243.png" alt="Pause" style="width: 24px; height: 24px;">
-            </button>
+            <button class="play-btn"></button> <!-- Play düğmesi -->
+            <button class="pause-btn"></button> <!-- Pause düğmesi -->
         </div>
         <div class="track-title">88.0 Ezgi FM</div> <!-- Şarkı başlığı -->
         <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1"> <!-- Ses kontrolü -->
