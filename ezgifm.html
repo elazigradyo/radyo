@@ -46,7 +46,7 @@
         /* Hover ve Focus için ortak stil */
         .play-btn:hover, .play-btn:focus, 
         .pause-btn:hover, .pause-btn:focus {
-            background-color: #ff5722; /* Hover ve Focus durumunda düğme rengi */
+            background-color: #ba1616; /* Hover ve Focus durumunda düğme rengi */
             outline: none; /* Focus için varsayılan çerçeveyi kaldırır */
             transform: scale(1.05); /* Hafif bir büyütme efekti ekler */
         }
@@ -76,7 +76,7 @@
             appearance: none;
             width: 25px; /* Düğme genişliği */
             height: 25px; /* Düğme yüksekliği */
-            background: #2c80b0; /* Düğme rengi */
+            background: #ba1616; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
             cursor: pointer;
@@ -86,7 +86,7 @@
         input[type="range"]::-moz-range-thumb {
             width: 25px;
             height: 25px;
-            background: #2c80b0; /* Düğme rengi */
+            background: #ba1616; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
             cursor: pointer;
@@ -96,7 +96,7 @@
         input[type="range"]::-ms-thumb {
             width: 25px;
             height: 25px;
-            background: #2c80b0; /* Düğme rengi */
+            background: #ba1616; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
             cursor: pointer;
@@ -126,6 +126,12 @@
         /* Checkbox seçildiğinde görünüm */
         input[type="checkbox"]:checked {
             background-color: #000;
+        }
+
+        /* Checkbox aktifken diğer öğeleri pasifleştirmeyi önler */
+        input[type="checkbox"]:checked + label,
+        input[type="checkbox"]:hover + label {
+            pointer-events: none;
         }
     </style>
 </head>
