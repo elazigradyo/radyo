@@ -128,8 +128,8 @@
             background-color: #000;
         }
 
-        /* Butonların hover ve focus durumları etkilenmesin */
-        input[type="checkbox"]:checked + label ~ .control-buttons button:hover {
+        /* Checkbox seçilse de butonlar her zaman çalışır */
+        input[type="checkbox"]:checked ~ .control-buttons button:hover {
             pointer-events: auto;
         }
     </style>
@@ -154,7 +154,6 @@
         const pauseButton = document.querySelector('.pause-btn');
         const volumeControl = document.getElementById('volume-control');
         const backgroundPlayToggle = document.getElementById('background-play-toggle');
-        let allowBackgroundPlay = false; // Kullanıcı tercihi için bayrak
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
@@ -176,22 +175,7 @@
 
         // Arka planda oynatma tercihini kaydeder
         backgroundPlayToggle.addEventListener('change', (event) => {
-            allowBackgroundPlay = event.target.checked;
-        });
-
-        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
-        document.addEventListener('visibilitychange', () => {
-            if (!allowBackgroundPlay && document.hidden) {
-                audioPlayer.pause(); // Sayfa gizliyse oynatmayı durdur
-            }
-        });
-
-        // Sayfa kapatıldığında oynatmayı sıfırlar
-        window.addEventListener('unload', () => {
-            if (!allowBackgroundPlay) {
-                audioPlayer.pause(); // Oynatmayı durdur
-                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
-            }
+            // Checkbox seçimi sırasında bir değişiklik yapılabilir
         });
     </script>
 </body>
