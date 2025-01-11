@@ -3,81 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>89.2 Radyo Fırat</title>
+    <title>88.8 FM 23</title>
     <style>
         body {
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
             height: 100vh;
-            background-color: #f1f3f4;
+            background-color: #000;
+            color: #fff;
         }
         audio {
             width: 300px;
         }
-        label {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #333;
-        }
-        /* Yayın akış sürgüsünü gizleme */
-        audio::-webkit-media-controls-timeline {
-            display: none;
-        }
-        audio::-moz-range-track {
-            display: none;
-        }
-        audio::-ms-track {
-            display: none;
-        }
-        /* Oynatma sırasında görünen süreyi gizleme */
-        audio::-webkit-media-controls-current-time-display,
-        audio::-webkit-media-controls-time-remaining-display {
-            display: none;
-        }
-        audio::-moz-media-controls-current-time-display,
-        audio::-moz-media-controls-time-remaining-display {
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <audio id="radio" controls>
-        <source id="radioSource" src="https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3" type="audio/mpeg">
+    <audio controls>
+        <source src="https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3" type="audio/mpeg" type="audio/mpeg">
         Tarayıcınız bu ses oynatıcısını desteklemiyor.
     </audio>
-    <label>
-        <input type="checkbox" id="continuePlaying">
-        Sayfadan ayrıldığımda çalmaya devam et
-    </label>
-
-    <script>
-        const radio = document.getElementById('radio');
-        const radioSource = document.getElementById('radioSource');
-        const continuePlayingCheckbox = document.getElementById('continuePlaying');
-
-        // Sayfadan ayrılma veya yüklenmeme durumunda kontrol
-        window.addEventListener('beforeunload', (event) => {
-            if (!continuePlayingCheckbox.checked) {
-                radio.pause();
-                radio.currentTime = 0; // İsteğe bağlı, başa döner
-            }
-        });
-
-        // Durdurulduktan sonra tekrar oynatıldığında yayına bağlanma
-        radio.addEventListener('pause', () => {
-            // Oynatıcı durdurulduğunda kaynak URL'sini sıfırla
-            radioSource.src = '';
-            radio.load();
-        });
-
-        radio.addEventListener('play', () => {
-            // Tekrar oynatıldığında kaynak URL'sini yeniden ata
-            radioSource.src = 'https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3';
-            radio.load();
-        });
-    </script>
 </body>
 </html>
