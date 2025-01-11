@@ -5,87 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Radyo Player</title>
     <style>
+        /* Sayfa düzeni ve genel görünüm */
         body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffffff;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
+            margin: 0; /* Sayfa kenar boşluklarını sıfırlar */
+            display: flex; /* Elemanları merkezlemek için flexbox kullanır */
+            justify-content: center; /* Yatayda ortalama */
+            align-items: center; /* Dikeyde ortalama */
+            height: 100vh; /* Sayfa yüksekliği kadar alan kaplar */
+            background-color: #ffffff; /* Arka plan rengi */
+            color: #ffffff; /* Yazı rengi */
+            font-family: Arial, sans-serif; /* Yazı tipi */
         }
+
+        /* Player kutusunun görünümü */
         .player {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #08120a;
-            border-radius: 10px;
-            padding: 20px;
-            width: 300px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex; /* İç elemanları dikeyde hizalamak için */
+            flex-direction: column; /* Elemanları dikey sıralar */
+            align-items: center; /* Ortalar */
+            background-color: #08120a; /* Player arka plan rengi */
+            border-radius: 10px; /* Kenar yuvarlama */
+            padding: 20px; /* İç boşluk */
+            width: 300px; /* Player genişliği */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Gölge efekti */
         }
+
+        /* Oynatma ve durdurma düğmeleri */
         .control-buttons {
-            display: flex;
-            margin-bottom: 10px;
+            display: flex; /* Düğmeleri yan yana koyar */
+            margin-bottom: 10px; /* Alt boşluk */
         }
+
         .play-btn, .pause-btn {
-            background-color: #f5a25c;
-            border: none;
-            border-radius: 50%;
-            color: #fff;
-            width: 40px;
-            height: 40px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-right: 10px;
+            background-color: #f5a25c; /* Düğme arka plan rengi */
+            border: none; /* Kenarlık yok */
+            border-radius: 50%; /* Yuvarlak düğmeler */
+            color: #fff; /* İkon rengi */
+            width: 40px; /* Düğme genişliği */
+            height: 40px; /* Düğme yüksekliği */
+            font-size: 16px; /* Yazı boyutu */
+            cursor: pointer; /* Fare imlecini el simgesi yapar */
+            margin-right: 10px; /* Sağ boşluk */
         }
+
         .play-btn:hover, .pause-btn:hover {
-            background-color: #0056b3;
+            background-color: #d7d2cc; /* Hover durumunda düğme rengi */
         }
+
+        /* Şarkı başlığının görünümü */
         .track-title {
-            margin: 10px 0;
-            font-size: 16px;
+            margin: 10px 0; /* Üst ve alt boşluk */
+            font-size: 16px; /* Yazı boyutu */
         }
+
+        /* Checkbox ve etiketin görünümü */
         label {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            margin-top: 10px;
+            display: flex; /* İçeriği yan yana hizalar */
+            align-items: center; /* Dikeyde ortalar */
+            font-size: 14px; /* Yazı boyutu */
+            margin-top: 10px; /* Üst boşluk */
         }
+
         input[type="checkbox"] {
-            margin-right: 10px;
+            margin-right: 10px; /* Sağ boşluk */
         }
+
+        /* Ses kontrol sürgüsü */
         input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 6px;
-            background: #888;
-            border-radius: 5px;
-            outline: none;
-            margin-top: 10px;
+            -webkit-appearance: none; /* Varsayılan tarayıcı stilini kaldırır */
+            width: 100%; /* Genişlik */
+            height: 10px; /* Çubuğun yüksekliği */
+            background: #ccc; /* Çubuğun arka plan rengi */
+            border-radius: 5px; /* Köşe yuvarlama */
+            outline: none; /* Çerçeve kaldırılır */
+            margin-top: 10px; /* Üst boşluk */
+            cursor: pointer; /* Fare imlecini el simgesi yapar */
         }
+
         input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
+            -webkit-appearance: none; /* Tarayıcı varsayılanını kaldırır */
             appearance: none;
-            width: 12px;
-            height: 12px;
-            background: #007BFF;
-            border-radius: 50%;
-            cursor: pointer;
+            width: 25px; /* Düğme genişliği */
+            height: 25px; /* Düğme yüksekliği */
+            background: #f5a25c; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Düğme gölgesi */
+            cursor: pointer; /* Fare imlecini el simgesi yapar */
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px; /* Firefox için genişlik */
+            height: 20px; /* Firefox için yükseklik */
+            background: #f5a25c; /* Renk */
+            border-radius: 50%; /* Yuvarlak */
+            cursor: pointer; /* Fare imlecini el simgesi yapar */
         }
     </style>
 </head>
 <body>
     <div class="player">
         <div class="control-buttons">
-            <button class="play-btn">▶</button>
-            <button class="pause-btn">⏸</button>
+            <button class="play-btn">▶</button> <!-- Oynatma düğmesi -->
+            <button class="pause-btn">⏸</button> <!-- Durdurma düğmesi -->
         </div>
-        <div class="track-title">88.0 Ezgi FM</div>
-        <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1">
+        <div class="track-title">88.0 Ezgi FM</div> <!-- Şarkı başlığı -->
+        <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1"> <!-- Ses kontrolü -->
         <label>
-            <input type="checkbox" id="background-play-toggle">
+            <input type="checkbox" id="background-play-toggle"> <!-- Arka planda oynatma seçeneği -->
             Arka Planda Çalmaya Devam Et
         </label>
     </div>
@@ -96,39 +121,40 @@
         const pauseButton = document.querySelector('.pause-btn');
         const volumeControl = document.getElementById('volume-control');
         const backgroundPlayToggle = document.getElementById('background-play-toggle');
-        let allowBackgroundPlay = false;
+        let allowBackgroundPlay = false; // Kullanıcı tercihi için bayrak
 
-        // Oynatma ve durdurma düğmeleri
+        // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
             audioPlayer.play();
         });
 
+        // Durdurma düğmesine tıklandığında çalışır
         pauseButton.addEventListener('click', () => {
             audioPlayer.pause();
         });
 
-        // Ses kontrolü
+        // Ses kontrolü için sürgü
         volumeControl.addEventListener('input', (event) => {
-            audioPlayer.volume = event.target.value;
+            audioPlayer.volume = event.target.value; // Ses seviyesini ayarlar
         });
 
-        // Kullanıcı tercihini kaydet
+        // Arka planda oynatma tercihini kaydeder
         backgroundPlayToggle.addEventListener('change', (event) => {
             allowBackgroundPlay = event.target.checked;
         });
 
-        // Sayfa görünürlüğü değiştiğinde çalma kontrolü
+        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
         document.addEventListener('visibilitychange', () => {
             if (!allowBackgroundPlay && document.hidden) {
-                audioPlayer.pause();
+                audioPlayer.pause(); // Sayfa gizliyse oynatmayı durdur
             }
         });
 
-        // Sayfa tamamen kapatıldığında oynatmayı sıfırla (eğer çalmaya devam edilmesine izin verilmezse)
+        // Sayfa kapatıldığında oynatmayı sıfırlar
         window.addEventListener('unload', () => {
             if (!allowBackgroundPlay) {
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
+                audioPlayer.pause(); // Oynatmayı durdur
+                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
             }
         });
     </script>
