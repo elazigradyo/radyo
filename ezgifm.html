@@ -46,13 +46,13 @@
             cursor: pointer;
             margin-right: 10px;
             transition: background-color 0.3s ease, transform 0.3s ease; /* Geçiş efekti */
+            outline: none; /* Focus durumunda mavi kutuyu kaldırır */
         }
 
         /* Hover ve Focus için ortak stil */
         .play-btn:hover, .play-btn:focus, 
         .pause-btn:hover, .pause-btn:focus {
             background-color: #d7d2cc; /* Hover ve Focus durumunda düğme rengi */
-            outline: none; /* Focus için varsayılan çerçeveyi kaldırır */
             transform: scale(1.1); /* Hafif bir büyütme efekti ekler */
         }
 
@@ -136,47 +136,4 @@
     </div>
     <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
     <script>
-        const audioPlayer = document.getElementById('audio-player');
-        const playButton = document.querySelector('.play-btn');
-        const pauseButton = document.querySelector('.pause-btn');
-        const volumeControl = document.getElementById('volume-control');
-        const backgroundPlayToggle = document.getElementById('background-play-toggle');
-        let allowBackgroundPlay = false; // Kullanıcı tercihi için bayrak
-
-        // Oynatma düğmesine tıklandığında çalışır
-        playButton.addEventListener('click', () => {
-            audioPlayer.play();
-        });
-
-        // Durdurma düğmesine tıklandığında çalışır
-        pauseButton.addEventListener('click', () => {
-            audioPlayer.pause();
-        });
-
-        // Ses kontrolü için sürgü
-        volumeControl.addEventListener('input', (event) => {
-            audioPlayer.volume = event.target.value; // Ses seviyesini ayarlar
-        });
-
-        // Arka planda oynatma tercihini kaydeder
-        backgroundPlayToggle.addEventListener('change', (event) => {
-            allowBackgroundPlay = event.target.checked;
-        });
-
-        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
-        document.addEventListener('visibilitychange', () => {
-            if (!allowBackgroundPlay && document.hidden) {
-                audioPlayer.pause(); // Sayfa gizliyse oynatmayı durdur
-            }
-        });
-
-        // Sayfa kapatıldığında oynatmayı sıfırlar
-        window.addEventListener('unload', () => {
-            if (!allowBackgroundPlay) {
-                audioPlayer.pause(); // Oynatmayı durdur
-                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
-            }
-        });
-    </script>
-</body>
-</html>
+        const audioPlayer = document.getElementById('au
