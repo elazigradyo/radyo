@@ -46,7 +46,7 @@
         /* Hover ve Focus için ortak stil */
         .play-btn:hover, .play-btn:focus, 
         .pause-btn:hover, .pause-btn:focus {
-            background-color: #0075ff; /* Hover ve Focus durumunda düğme rengi */
+            background-color: #d6880b; /* Hover ve Focus durumunda düğme rengi */
             outline: none; /* Focus için varsayılan çerçeveyi kaldırır */
             transform: scale(1.05); /* Hafif bir büyütme efekti ekler */
         }
@@ -137,6 +137,38 @@
             audioPlayer.volume = event.target.value; // Ses seviyesini ayarlar
         });
 
+        /* WebKit tabanlı tarayıcılar (Chrome, Safari, Edge) için */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px; /* Düğme genişliği */
+            height: 25px; /* Düğme yüksekliği */
+            background: #d6880b; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Mozilla Firefox için */
+        input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #d6880b; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Internet Explorer için */
+        input[type="range"]::-ms-thumb {
+            width: 25px;
+            height: 25px;
+            background: #d6880b; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+        
         // Arka planda oynatma tercihini kaydeder
         backgroundPlayToggle.addEventListener('change', (event) => {
             allowBackgroundPlay = event.target.checked;
