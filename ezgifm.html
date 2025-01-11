@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffffff; /* Arka plan rengi */
+            background-color: #ffffff;
             font-family: Arial, sans-serif;
         }
 
@@ -32,74 +32,30 @@
         }
 
         .play-btn, .pause-btn {
-            background-color: #2c80b0; /* Varsayılan düğme rengi */
+            background-color: #2c80b0;
             border: none;
-            border-radius: 5px; /* Hafif yuvarlak köşeler */
-            color: #fefefe; /* Yazı rengi */
-            padding: 10px 20px; /* Buton boyutlarını ayarlamak için */
+            border-radius: 5px;
+            color: #fefefe;
+            padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
             margin-right: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease; /* Geçiş efekti */
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         /* Hover ve Focus için ortak stil */
-        .play-btn:hover, .play-btn:focus, 
+        .play-btn:hover, .play-btn:focus,
         .pause-btn:hover, .pause-btn:focus {
-            background-color: #ba1616; /* Hover ve Focus durumunda düğme rengi */
-            outline: none; /* Focus için varsayılan çerçeveyi kaldırır */
-            transform: scale(1.05); /* Hafif bir büyütme efekti ekler */
+            background-color: #ba1616;
+            outline: none;
+            transform: scale(1.05);
         }
 
         /* Şarkı başlığının görünümü */
         .track-title {
             margin: 10px 0;
             font-size: 16px;
-            color: #000; /* Şarkı başlığı siyah */
-        }
-
-        /* Ses kontrol sürgüsü */
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 10px;
-            background: #9c9c9a; /* Çubuğun arka plan rengi */
-            border-radius: 5px;
-            outline: none;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        /* WebKit tabanlı tarayıcılar (Chrome, Safari, Edge) için */
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px; /* Düğme genişliği */
-            height: 25px; /* Düğme yüksekliği */
-            background: #2c80b0; /* Düğme rengi */
-            border-radius: 50%; /* Yuvarlak düğme */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
-            cursor: pointer;
-        }
-
-        /* Mozilla Firefox için */
-        input[type="range"]::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            background: #2c80b0; /* Düğme rengi */
-            border-radius: 50%; /* Yuvarlak düğme */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
-            cursor: pointer;
-        }
-
-        /* Internet Explorer için */
-        input[type="range"]::-ms-thumb {
-            width: 25px;
-            height: 25px;
-            background: #2c80b0; /* Düğme rengi */
-            border-radius: 50%; /* Yuvarlak düğme */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
-            cursor: pointer;
+            color: #000;
         }
 
         /* Checkbox ve etiketin görünümü */
@@ -108,74 +64,61 @@
             align-items: center;
             font-size: 14px;
             margin-top: 10px;
-            color: #000; /* Yazı rengini siyah yap */
+            color: #000;
         }
 
         input[type="checkbox"] {
             margin-right: 10px;
-            border: 2px solid #000; /* Çerçeve siyah */
-            appearance: none; /* Tarayıcı varsayılanını kaldır */
+            border: 2px solid #000;
+            appearance: none;
             width: 16px;
             height: 16px;
-            border-radius: 3px; /* Kare şekil */
+            border-radius: 3px;
             background-color: #fff;
             cursor: pointer;
-            display: inline-block;
         }
 
         /* Checkbox seçildiğinde görünüm */
         input[type="checkbox"]:checked {
             background-color: #000;
         }
-
-        /* Checkbox seçilse de butonlar her zaman çalışır */
-        input[type="checkbox"]:checked ~ .control-buttons button:hover {
-            pointer-events: auto;
-        }
     </style>
 </head>
 <body>
     <div class="player">
         <div class="control-buttons">
-            <button class="play-btn">OYNAT</button> <!-- Oynatma düğmesi -->
-            <button class="pause-btn">DURDUR</button> <!-- Durdurma düğmesi -->
+            <button class="play-btn">OYNAT</button>
+            <button class="pause-btn">DURDUR</button>
         </div>
-        <div class="track-title">88.0 Ezgi FM</div> <!-- Şarkı başlığı -->
-        <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1"> <!-- Ses kontrolü -->
+        <div class="track-title">88.0 Ezgi FM</div>
         <label>
-            <input type="checkbox" id="background-play-toggle"> <!-- Arka planda oynatma seçeneği -->
-            Arka Planda Çalmaya Devam Et
+            <input type="checkbox" id="background-play-toggle"> Arka Planda Çalmaya Devam Et
         </label>
     </div>
+
     <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
     <script>
-        const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
-        const volumeControl = document.getElementById('volume-control');
         const backgroundPlayToggle = document.getElementById('background-play-toggle');
 
-        // Oynatma düğmesine tıklandığında çalışır
+        // Checkbox'a tıklanıldığında odak kontrolü
+        backgroundPlayToggle.addEventListener('click', () => {
+            // Odak sırasını manuel olarak kontrol et
+            playButton.blur(); // Odak sırasını butonlardan kaldır
+            setTimeout(() => {
+                playButton.focus(); // Tekrar butona odaklan
+            }, 0);
+        });
+
+        // Oynatma düğmesine tıklandığında
         playButton.addEventListener('click', () => {
-            audioPlayer.pause(); // Oynatıcıyı durdur
-            audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
-            audioPlayer.load(); // Kaynağı yeniden yükle
-            audioPlayer.play(); // Güncel yayını başlat
+            console.log('Oynatıldı');
         });
 
-        // Durdurma düğmesine tıklandığında çalışır
+        // Durdurma düğmesine tıklandığında
         pauseButton.addEventListener('click', () => {
-            audioPlayer.pause();
-        });
-
-        // Ses kontrolü için sürgü
-        volumeControl.addEventListener('input', (event) => {
-            audioPlayer.volume = event.target.value; // Ses seviyesini ayarlar
-        });
-
-        // Arka planda oynatma tercihini kaydeder
-        backgroundPlayToggle.addEventListener('change', (event) => {
-            // Checkbox seçimi sırasında bir değişiklik yapılabilir
+            console.log('Durduruldu');
         });
     </script>
 </body>
