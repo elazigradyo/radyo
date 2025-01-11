@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimal Player</title>
+    <title>89.2 Radyo Fırat</title>
     <style>
         body {
             margin: 0;
@@ -11,59 +11,34 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffffff;
+            background-color: #f1f3f4;
         }
-        .player {
-            display: flex;
-            gap: 20px;
-            align-items: center;
+        audio {
+            width: 300px;
+            position: relative;
         }
-        .player button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 36px; /* İkon boyutu */
-            color: #007BFF;
+        /* Butonları konumlandırma (sadece WebKit tarayıcılarında çalışır) */
+        audio::-webkit-media-controls-play-button {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            transform: scale(1.5); /* Boyutu büyütme */
         }
-        .player button:hover {
-            color: #0056b3;
+        audio::-webkit-media-controls-mute-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            transform: scale(1.5); /* Boyutu büyütme */
+        }
+        audio::-webkit-media-controls-timeline {
+            display: none; /* Yayın akış çubuğunu gizleme */
         }
     </style>
 </head>
 <body>
-    <div class="player">
-        <!-- Oynat/Durdur İkonu -->
-        <button id="playPause">▶</button>
-        <!-- Ses Kapat/Aç İkonu -->
-        <button id="muteToggle">🔈</button>
-    </div>
-
-    <audio id="audioPlayer">
+    <audio controls>
         <source src="https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3" type="audio/mpeg">
         Tarayıcınız bu ses oynatıcısını desteklemiyor.
     </audio>
-
-    <script>
-        const audioPlayer = document.getElementById('audioPlayer');
-        const playPauseButton = document.getElementById('playPause');
-        const muteToggleButton = document.getElementById('muteToggle');
-
-        // Oynat/Durdur fonksiyonu
-        playPauseButton.addEventListener('click', () => {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                playPauseButton.textContent = '⏸'; // Durdur ikonu
-            } else {
-                audioPlayer.pause();
-                playPauseButton.textContent = '▶'; // Oynat ikonu
-            }
-        });
-
-        // Ses Kapat/Aç fonksiyonu
-        muteToggleButton.addEventListener('click', () => {
-            audioPlayer.muted = !audioPlayer.muted;
-            muteToggleButton.textContent = audioPlayer.muted ? '🔇' : '🔈'; // İkonu değiştir
-        });
-    </script>
 </body>
 </html>
