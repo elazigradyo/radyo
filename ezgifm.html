@@ -7,97 +7,117 @@
     <style>
         /* Sayfa düzeni ve genel görünüm */
         body {
-            margin: 0; /* Sayfa kenar boşluklarını sıfırlar */
-            display: flex; /* Elemanları merkezlemek için flexbox kullanır */
-            justify-content: center; /* Yatayda ortalama */
-            align-items: center; /* Dikeyde ortalama */
-            height: 100vh; /* Sayfa yüksekliği kadar alan kaplar */
-            background-color: #ffffff; /* Arka plan rengi */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ebebeb; /* Arka plan rengi */
             color: #ffffff; /* Yazı rengi */
-            font-family: Arial, sans-serif; /* Yazı tipi */
+            font-family: Arial, sans-serif;
         }
 
         /* Player kutusunun görünümü */
         .player {
-            display: flex; /* İç elemanları dikeyde hizalamak için */
-            flex-direction: column; /* Elemanları dikey sıralar */
-            align-items: center; /* Ortalar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             background-color: #08120a; /* Player arka plan rengi */
-            border-radius: 10px; /* Kenar yuvarlama */
-            padding: 20px; /* İç boşluk */
-            width: 300px; /* Player genişliği */
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Gölge efekti */
         }
 
         /* Oynatma ve durdurma düğmeleri */
         .control-buttons {
-            display: flex; /* Düğmeleri yan yana koyar */
-            margin-bottom: 10px; /* Alt boşluk */
+            display: flex;
+            margin-bottom: 10px;
         }
 
         .play-btn, .pause-btn {
-            background-color: #c9cfcd; /* Düğme arka plan rengi */
-            border: none; /* Kenarlık yok */
+            background-color: #ebebeb; /* Varsayılan düğme rengi */
+            border: none;
             border-radius: 50%; /* Yuvarlak düğmeler */
-            color: #fff; /* İkon rengi */
-            width: 40px; /* Düğme genişliği */
-            height: 40px; /* Düğme yüksekliği */
-            font-size: 16px; /* Yazı boyutu */
-            cursor: pointer; /* Fare imlecini el simgesi yapar */
-            margin-right: 10px; /* Sağ boşluk */
+            color: #08120a; /* İkon rengi */
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Geçiş efekti */
         }
 
-        .play-btn:hover, .pause-btn:hover {
-            background-color: #d7d2cc; /* Hover durumunda düğme rengi */
+        /* Hover ve Focus için ortak stil */
+        .play-btn:hover, .play-btn:focus, 
+        .pause-btn:hover, .pause-btn:focus {
+            background-color: #d7d2cc; /* Hover ve Focus durumunda düğme rengi */
+            outline: none; /* Focus için varsayılan çerçeveyi kaldırır */
+            transform: scale(1.1); /* Hafif bir büyütme efekti ekler */
         }
 
         /* Şarkı başlığının görünümü */
         .track-title {
-            margin: 10px 0; /* Üst ve alt boşluk */
-            font-size: 16px; /* Yazı boyutu */
-        }
-
-        /* Checkbox ve etiketin görünümü */
-        label {
-            display: flex; /* İçeriği yan yana hizalar */
-            align-items: center; /* Dikeyde ortalar */
-            font-size: 14px; /* Yazı boyutu */
-            margin-top: 10px; /* Üst boşluk */
-        }
-
-        input[type="checkbox"] {
-            margin-right: 10px; /* Sağ boşluk */
+            margin: 10px 0;
+            font-size: 16px;
+            color: #fff; /* Şarkı başlığı rengi */
         }
 
         /* Ses kontrol sürgüsü */
         input[type="range"] {
-            -webkit-appearance: none; /* Varsayılan tarayıcı stilini kaldırır */
-            width: 100%; /* Genişlik */
-            height: 10px; /* Çubuğun yüksekliği */
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
             background: #ccc; /* Çubuğun arka plan rengi */
-            border-radius: 5px; /* Köşe yuvarlama */
-            outline: none; /* Çerçeve kaldırılır */
-            margin-top: 10px; /* Üst boşluk */
-            cursor: pointer; /* Fare imlecini el simgesi yapar */
+            border-radius: 5px;
+            outline: none;
+            margin-top: 10px;
+            cursor: pointer;
         }
 
+        /* WebKit tabanlı tarayıcılar (Chrome, Safari, Edge) için */
         input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; /* Tarayıcı varsayılanını kaldırır */
+            -webkit-appearance: none;
             appearance: none;
             width: 25px; /* Düğme genişliği */
             height: 25px; /* Düğme yüksekliği */
-            background: #f5a25c; /* Düğme rengi */
+            background: #ff5722; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Düğme gölgesi */
-            cursor: pointer; /* Fare imlecini el simgesi yapar */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
         }
 
+        /* Mozilla Firefox için */
         input[type="range"]::-moz-range-thumb {
-            width: 20px; /* Firefox için genişlik */
-            height: 20px; /* Firefox için yükseklik */
-            background: #f5a25c; /* Renk */
-            border-radius: 50%; /* Yuvarlak */
-            cursor: pointer; /* Fare imlecini el simgesi yapar */
+            width: 25px;
+            height: 25px;
+            background: #ff5722; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Internet Explorer için */
+        input[type="range"]::-ms-thumb {
+            width: 25px;
+            height: 25px;
+            background: #ff5722; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Checkbox ve etiketin görünümü */
+        label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #fff;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
         }
     </style>
 </head>
