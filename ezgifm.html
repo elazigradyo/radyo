@@ -18,6 +18,11 @@
         }
 
         /* Player kutusunun görünümü */
+        .player-container {
+            display: flex;
+            align-items: center;
+        }
+
         .player {
             display: flex;
             flex-direction: column;
@@ -63,21 +68,30 @@
             color: #fff; /* Şarkı başlığı rengi */
         }
 
-        /* Ses kontrol sürgüsü */
-        .volume-control {
+        /* Dikey ses kontrol sürgüsü */
+        .volume-control-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            margin-left: 20px;
+        }
+
+        input[type="range"] {
             -webkit-appearance: none;
-            appearance: none;
-            width: 150px; /* Yatay genişlik yerine */
+            writing-mode: bt-lr; /* Dikey görünüm */
+            transform: rotate(-90deg); /* 90 derece döndür */
+            width: 150px; /* Çubuğun uzunluğu */
             height: 10px;
             background: #ccc; /* Çubuğun arka plan rengi */
             border-radius: 5px;
             outline: none;
+            margin: 0;
             cursor: pointer;
-            transform: rotate(-90deg); /* Dikey yapmak için döndürme */
         }
 
         /* WebKit tabanlı tarayıcılar (Chrome, Safari, Edge) için */
-        .volume-control::-webkit-slider-thumb {
+        input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 25px; /* Düğme genişliği */
@@ -89,7 +103,7 @@
         }
 
         /* Mozilla Firefox için */
-        .volume-control::-moz-range-thumb {
+        input[type="range"]::-moz-range-thumb {
             width: 25px;
             height: 25px;
             background: #ff5722; /* Düğme rengi */
@@ -99,7 +113,7 @@
         }
 
         /* Internet Explorer için */
-        .volume-control::-ms-thumb {
+        input[type="range"]::-ms-thumb {
             width: 25px;
             height: 25px;
             background: #ff5722; /* Düğme rengi */
@@ -123,17 +137,21 @@
     </style>
 </head>
 <body>
-    <div class="player">
-        <div class="control-buttons">
-            <button class="play-btn">►</button> <!-- Oynatma düğmesi -->
-            <button class="pause-btn">∥</button> <!-- Pause düğmesi (Pause) -->
+    <div class="player-container">
+        <div class="player">
+            <div class="control-buttons">
+                <button class="play-btn">►</button> <!-- Oynatma düğmesi -->
+                <button class="pause-btn">∥</button> <!-- Pause düğmesi (İki Düz Çizgi) -->
+            </div>
+            <div class="track-title">88.0 Ezgi FM</div> <!-- Şarkı başlığı -->
+            <label>
+                <input type="checkbox" id="background-play-toggle"> <!-- Arka planda oynatma seçeneği -->
+                Arka Planda Çalmaya Devam Et
+            </label>
         </div>
-        <div class="track-title">88.0 Ezgi FM</div> <!-- Şarkı başlığı -->
-        <input type="range" id="volume-control" class="volume-control" min="0" max="1" step="0.1" value="1"> <!-- Ses kontrolü (Dikey) -->
-        <label>
-            <input type="checkbox" id="background-play-toggle"> <!-- Arka planda oynatma seçeneği -->
-            Arka Planda Çalmaya Devam Et
-        </label>
+        <div class="volume-control-container">
+            <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1"> <!-- Dikey Ses kontrolü -->
+        </div>
     </div>
     <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
     <script>
@@ -167,8 +185,20 @@
             allowBackgroundPlay = event.target.checked;
         });
 
-        // Sayfa görünülüğü değiştiğinde oynatma kontrolü
+        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
         document.addEventListener('visibilitychange', () => {
             if (!allowBackgroundPlay && document.hidden) {
                 audioPlayer.pause(); // Sayfa gizliyse oynatmayı durdur
             }
+        });
+
+        // Sayfa kapatıldığında oynatmayı sıfırlar
+        window.addEventListener('unload', () => {
+            if (!allowBackgroundPlay) {
+                audioPlayer.pause(); // Oynatmayı durdur
+                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
+            }
+        });
+    </script>
+</body>
+</html>
