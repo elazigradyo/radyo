@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ebebeb; /* Arka plan rengi */
+            background-color: #ffffff; /* Arka plan rengi */
             color: #ffffff; /* Yazı rengi */
             font-family: Arial, sans-serif;
         }
@@ -36,27 +36,22 @@
         }
 
         .play-btn, .pause-btn {
-            background-color: #ebebeb; /* Varsayılan düğme rengi */
+            background-color: #c9cfcd; /* Varsayılan düğme rengi */
             border: none;
             border-radius: 50%; /* Yuvarlak düğmeler */
-            color: #154c79; /* İkon rengi */
-            width: 40px;
-            height: 40px;
-            font-size: 16px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
-            margin-right: 10px;
+            color: #154c79; /* SVG ikon rengi */
             transition: background-color 0.3s ease, transform 0.3s ease; /* Geçiş efekti */
-            outline: none; /* Focus durumunda mavi kutuyu kaldırır */
-            box-shadow: none; /* Focus sırasında eklenen tarayıcı gölgesini kaldırır */
         }
 
-        /* Hover ve Focus için ortak stil */
-        .play-btn:hover, .play-btn:focus, 
-        .pause-btn:hover, .pause-btn:focus {
-            background-color: #d7d2cc; /* Hover ve Focus durumunda düğme rengi */
-            transform: scale(1.1); /* Hafif bir büyütme efekti ekler */
-            outline: none; /* Focus durumunda çerçeve kaldır */
-            box-shadow: none; /* Focus sırasında gölgeyi kaldır */
+        .play-btn:hover, .pause-btn:hover {
+            background-color: #d7d2cc; /* Hover durumunda düğme rengi */
+            transform: scale(1.1); /* Hafif bir büyütme efekti */
         }
 
         /* Şarkı başlığının görünümü */
@@ -127,8 +122,18 @@
 <body>
     <div class="player">
         <div class="control-buttons">
-            <button class="play-btn">▶</button> <!-- Oynatma düğmesi -->
-            <button class="pause-btn">⏸</button> <!-- Durdurma düğmesi -->
+            <!-- Play düğmesi -->
+            <button class="play-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+            </button>
+            <!-- Pause düğmesi -->
+            <button class="pause-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                    <path d="M6 5h4v14H6zm8 0h4v14h-4z" />
+                </svg>
+            </button>
         </div>
         <div class="track-title">88.0 Ezgi FM</div> <!-- Şarkı başlığı -->
         <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1"> <!-- Ses kontrolü -->
