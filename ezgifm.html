@@ -128,10 +128,9 @@
             background-color: #000;
         }
 
-        /* Checkbox aktifken diğer öğeleri pasifleştirmeyi önler */
-        input[type="checkbox"]:checked + label,
-        input[type="checkbox"]:hover + label {
-            pointer-events: none;
+        /* Butonların hover ve focus durumları etkilenmesin */
+        input[type="checkbox"]:checked + label ~ .control-buttons button:hover {
+            pointer-events: auto;
         }
     </style>
 </head>
