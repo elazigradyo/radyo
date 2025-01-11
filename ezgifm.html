@@ -3,67 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>88.0 Ezgi FM</title>
+    <title>Custom Radyo Player</title>
     <style>
+        /* Sayfa düzeni ve genel görünüm */
         body {
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f1f3f4;
+            background-color: #ffffff; /* Arka plan rengi */
+            color: #ffffff; /* Yazı rengi */
+            font-family: Arial, sans-serif;
         }
+
+        /* Player kutusunun görünümü */
         .player {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            background-color: #ffffff; /* Player arka plan rengi */
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Gölge efekti */
         }
-        .player button {
-            background-color: #007BFF;
-            color: white;
+
+        /* Oynatma ve durdurma düğmeleri */
+        .control-buttons {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .play-btn, .pause-btn {
+            background-color: #c9cfcd; /* Varsayılan düğme rengi */
             border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
+            border-radius: 50%; /* Yuvarlak düğmeler */
+            color: #fff; /* İkon rengi */
+            width: 40px;
+            height: 40px;
             font-size: 16px;
             cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Geçiş efekti */
         }
-        .player button:hover {
-            background-color: #0056b3;
+
+        /* Hover ve Focus için ortak stil */
+        .play-btn:hover, .play-btn:focus, 
+        .pause-btn:hover, .pause-btn:focus {
+            background-color: #d7d2cc; /* Hover ve Focus durumunda düğme rengi */
+            outline: none; /* Focus için varsayılan çerçeveyi kaldırır */
+            transform: scale(1.1); /* Hafif bir büyütme efekti ekler */
+        }
+
+        /* Şarkı başlığının görünümü */
+        .track-title {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #fff; /* Şarkı başlığı rengi */
+        }
+
+        /* Ses kontrol sürgüsü */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: #ccc; /* Çubuğun arka plan rengi */
+            border-radius: 5px;
+            outline: none;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        /* WebKit tabanlı tarayıcılar (Chrome, Safari, Edge) için */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px; /* Düğme genişliği */
+            height: 25px; /* Düğme yüksekliği */
+            background: #ff5722; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Mozilla Firefox için */
+        input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #ff5722; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Internet Explorer için */
+        input[type="range"]::-ms-thumb {
+            width: 25px;
+            height: 25px;
+            background: #ff5722; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Checkbox ve etiketin görünümü */
+        label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #fff;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div class="player">
-        <button id="playPause">▶ Oynat</button>
-        <button id="muteToggle">🔈 Sesi Kapat</button>
+        <div class="control-buttons">
+            <button class="play-btn">►</button> <!-- Oynatma düğmesi -->
+            <button class="pause-btn">∥</button> <!-- Pause düğmesi (İki Düz Çizgi) -->
+        </div>
+        <div class="track-title">88.0 Ezgi FM</div> <!-- Şarkı başlığı -->
+        <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1"> <!-- Ses kontrolü -->
+        <label>
+            <input type="checkbox" id="background-play-toggle"> <!-- Arka planda oynatma seçeneği -->
+            Arka Planda Çalmaya Devam Et
+        </label>
     </div>
-
-    <audio id="audioPlayer">
-        <source src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3" type="audio/mpeg">
-        Tarayıcınız bu ses oynatıcısını desteklemiyor.
-    </audio>
-
+    <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
     <script>
-        const audioPlayer = document.getElementById('audioPlayer');
-        const playPauseButton = document.getElementById('playPause');
-        const muteToggleButton = document.getElementById('muteToggle');
+        const audioPlayer = document.getElementById('audio-player');
+        const playButton = document.querySelector('.play-btn');
+        const pauseButton = document.querySelector('.pause-btn');
+        const volumeControl = document.getElementById('volume-control');
+        const backgroundPlayToggle = document.getElementById('background-play-toggle');
+        let allowBackgroundPlay = false; // Kullanıcı tercihi için bayrak
 
-        // Oynat/Durdur fonksiyonu
-        playPauseButton.addEventListener('click', () => {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                playPauseButton.textContent = '⏸ Durdur';
-            } else {
-                audioPlayer.pause();
-                playPauseButton.textContent = '▶ Oynat';
+        // Oynatma düğmesine tıklandığında çalışır
+        playButton.addEventListener('click', () => {
+            audioPlayer.pause(); // Oynatıcıyı durdur
+            audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
+            audioPlayer.load(); // Kaynağı yeniden yükle
+            audioPlayer.play(); // Güncel yayını başlat
+        });
+
+        // Durdurma düğmesine tıklandığında çalışır
+        pauseButton.addEventListener('click', () => {
+            audioPlayer.pause();
+        });
+
+        // Ses kontrolü için sürgü
+        volumeControl.addEventListener('input', (event) => {
+            audioPlayer.volume = event.target.value; // Ses seviyesini ayarlar
+        });
+
+        // Arka planda oynatma tercihini kaydeder
+        backgroundPlayToggle.addEventListener('change', (event) => {
+            allowBackgroundPlay = event.target.checked;
+        });
+
+        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
+        document.addEventListener('visibilitychange', () => {
+            if (!allowBackgroundPlay && document.hidden) {
+                audioPlayer.pause(); // Sayfa gizliyse oynatmayı durdur
             }
         });
 
-        // Ses kapatma/açma fonksiyonu
-        muteToggleButton.addEventListener('click', () => {
-            audioPlayer.muted = !audioPlayer.muted;
-            muteToggleButton.textContent = audioPlayer.muted ? '🔊 Sesi Aç' : '🔈 Sesi Kapat';
+        // Sayfa kapatıldığında oynatmayı sıfırlar
+        window.addEventListener('unload', () => {
+            if (!allowBackgroundPlay) {
+                audioPlayer.pause(); // Oynatmayı durdur
+                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
+            }
         });
     </script>
 </body>
