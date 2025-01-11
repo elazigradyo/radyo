@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>88.8 FM 23</title>
+    <title>89.2 Radyo Fırat</title>
     <style>
         body {
             margin: 0;
@@ -11,17 +11,35 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000;
-            color: #fff;
+            background-color: #f1f3f4;
         }
         audio {
             width: 300px;
+        }
+        /* Yayın akış sürgüsünü gizleme */
+        audio::-webkit-media-controls-timeline {
+            display: none;
+        }
+        audio::-moz-range-track {
+            display: none;
+        }
+        audio::-ms-track {
+            display: none;
+        }
+        /* Oynatma sırasında görünen süreyi gizleme */
+        audio::-webkit-media-controls-current-time-display,
+        audio::-webkit-media-controls-time-remaining-display {
+            display: none;
+        }
+        audio::-moz-media-controls-current-time-display,
+        audio::-moz-media-controls-time-remaining-display {
+            display: none;
         }
     </style>
 </head>
 <body>
     <audio controls>
-        <source src="https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3" type="audio/mpeg" type="audio/mpeg">
+        <source src="https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3" type="audio/mpeg">
         Tarayıcınız bu ses oynatıcısını desteklemiyor.
     </audio>
 </body>
