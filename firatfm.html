@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>89.2 Radyo Fırat</title>
+    <title>Minimal Player</title>
     <style>
         body {
             margin: 0;
@@ -13,36 +13,57 @@
             height: 100vh;
             background-color: #f1f3f4;
         }
-        audio {
-            width: 90%; /* Ekrana sığması için genişlik yüzdeyle ayarlandı */
-            max-width: 400px; /* Maksimum genişlik */
-            transform: scale(1.5); /* Player büyütme oranı */
+        .player {
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
-        /* Yayın akış sürgüsünü gizleme */
-        audio::-webkit-media-controls-timeline {
-            display: none;
+        .player button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 36px; /* İkon boyutu */
+            color: #007BFF;
         }
-        audio::-moz-range-track {
-            display: none;
-        }
-        audio::-ms-track {
-            display: none;
-        }
-        /* Oynatma sırasında görünen süreyi gizleme */
-        audio::-webkit-media-controls-current-time-display,
-        audio::-webkit-media-controls-time-remaining-display {
-            display: none;
-        }
-        audio::-moz-media-controls-current-time-display,
-        audio::-moz-media-controls-time-remaining-display {
-            display: none;
+        .player button:hover {
+            color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <audio controls>
+    <div class="player">
+        <!-- Oynat/Durdur İkonu -->
+        <button id="playPause">▶</button>
+        <!-- Ses Kapat/Aç İkonu -->
+        <button id="muteToggle">🔈</button>
+    </div>
+
+    <audio id="audioPlayer">
         <source src="https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3" type="audio/mpeg">
         Tarayıcınız bu ses oynatıcısını desteklemiyor.
     </audio>
+
+    <script>
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseButton = document.getElementById('playPause');
+        const muteToggleButton = document.getElementById('muteToggle');
+
+        // Oynat/Durdur fonksiyonu
+        playPauseButton.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseButton.textContent = '⏸'; // Durdur ikonu
+            } else {
+                audioPlayer.pause();
+                playPauseButton.textContent = '▶'; // Oynat ikonu
+            }
+        });
+
+        // Ses Kapat/Aç fonksiyonu
+        muteToggleButton.addEventListener('click', () => {
+            audioPlayer.muted = !audioPlayer.muted;
+            muteToggleButton.textContent = audioPlayer.muted ? '🔇' : '🔈'; // İkonu değiştir
+        });
+    </script>
 </body>
 </html>
