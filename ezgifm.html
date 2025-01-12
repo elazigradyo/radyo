@@ -21,14 +21,20 @@
             display: flex;
             align-items: center;
             padding: 20px;
-            width: 400px;
+        }
+
+        /* Logo ve kontrolleri içeren dikey düzen */
+        .main-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* Logo çerçevesi */
         .logo-container {
             width: 200px;
             height: 200px;
-            margin-right: 20px;
+            margin-bottom: 20px;
             border: 0px solid #2c80b0; /* Çerçeve rengi */
             border-radius: 10px; /* Hafif yuvarlak köşeler */
             display: flex;
@@ -42,17 +48,10 @@
             max-height: 100%;
         }
 
-        /* Kontrol ve ses kontrolü bölümü */
-        .controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         /* Oynatma ve durdurma düğmeleri */
         .control-buttons {
             display: flex;
-            margin-bottom: 20px;
+            margin-top: 10px;
         }
 
         .play-btn, .pause-btn {
@@ -130,12 +129,11 @@
 </head>
 <body>
     <div class="player">
-        <!-- Logo Çerçevesi -->
-        <div class="logo-container">
-            <img src="https://www.canliradyodinle.fm/wp-content/uploads/elazig-ezgi-radyo-dinle.jpg" alt="88.0 Ezgi FM Logo">
-        </div>
-        <!-- Kontrol Düğmeleri ve Ses Kontrolü -->
-        <div class="controls">
+        <!-- Logo ve Kontroller -->
+        <div class="main-controls">
+            <div class="logo-container">
+                <img src="https://www.canliradyodinle.fm/wp-content/uploads/elazig-ezgi-radyo-dinle.jpg" alt="88.0 Ezgi FM Logo">
+            </div>
             <div class="control-buttons">
                 <button class="play-btn">OYNAT</button>
                 <button class="pause-btn">DURDUR</button>
