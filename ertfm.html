@@ -107,7 +107,7 @@
     <div class="player">
         <!-- Logo -->
         <div class="logo-container">
-            <img src="https://www.canliradyodinle.fm/wp-content/uploads/elazig-ert-fm-dinle.jpg" alt="88.0 Ezgi FM Logo">
+            <img src="https://www.canliradyodinle.fm/wp-content/uploads/elazig-ert-fm-dinle.jpg" alt="96.8 ERT FM">
         </div>
 
         <!-- Ses Kontrol -->
@@ -132,9 +132,12 @@
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            audioPlayer.play();
-            isPlaying = true;
-            console.log('Radyo çalmaya başladı.');
+            if (!isPlaying) {
+                audioPlayer.load(); // Player'ı yeniden yükle
+                audioPlayer.play();
+                isPlaying = true;
+                console.log('Radyo çalmaya başladı.');
+            }
         });
 
         // Durdurma düğmesine tıklandığında çalışır
