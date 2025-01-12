@@ -107,7 +107,7 @@
     <div class="player">
         <!-- Logo -->
         <div class="logo-container">
-            <img src="https://scontent.fadb2-2.fna.fbcdn.net/v/t39.30808-6/307104309_464189709075705_7175415314345357673_n.png?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=5dQ-JmRPFnAQ7kNvgFgnT8L&_nc_zt=23&_nc_ht=scontent.fadb2-2.fna&_nc_gid=AwFzdLmzR_5Mgn7wYjyxtZ0&oh=00_AYBe0TxnvOfXFf5oo1dOSWWp_iHwrxF19oGTCWRJbMmOpg&oe=6788C94E" alt="88.0 Ezgi FM Logo">
+            <img src="https://scontent.fadb2-2.fna.fbcdn.net/v/t39.30808-6/307104309_464189709075705_7175415314345357673_n.png?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=5dQ-JmRPFnAQ7kNvgFgnT8L&_nc_zt=23&_nc_ht=scontent.fadb2-2.fna&_nc_gid=AwFzdLmzR_5Mgn7wYjyxtZ0&oh=00_AYBe0TxnvOfXFf5oo1dOSWWp_iHwrxF19oGTCWRJbMmOpg&oe=6788C94E" alt="92.0 Radyo Hazar">
         </div>
 
         <!-- Ses Kontrol -->
@@ -120,7 +120,7 @@
         </div>
     </div>
 
-    <audio id="https://radyodinle1.turkhosted.com/yayin?uri=yayin.turkiletisim.com.tr:1092/&tkn=8zamR4T96_35EHMcYgg8uQ&tms=1736795693"></audio>
+    <audio id="audio-player" src="https://radyodinle1.turkhosted.com/yayin?uri=yayin.turkiletisim.com.tr:1092/&tkn=8zamR4T96_35EHMcYgg8uQ&tms=1736795693"></audio>
     <script>
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
@@ -132,9 +132,12 @@
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            audioPlayer.play();
-            isPlaying = true;
-            console.log('Radyo çalmaya başladı.');
+            if (!isPlaying) {
+                audioPlayer.load(); // Player'ı yeniden yükle
+                audioPlayer.play();
+                isPlaying = true;
+                console.log('Radyo çalmaya başladı.');
+            }
         });
 
         // Durdurma düğmesine tıklandığında çalışır
