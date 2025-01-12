@@ -132,7 +132,6 @@
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            audioPlayer.load();
             audioPlayer.play();
             isPlaying = true;
             console.log('Radyo çalmaya başladı.');
@@ -147,11 +146,12 @@
             }
         });
 
-        // Sayfa görünürlüğü değiştiğinde oynatıcının durumunu güncelle
+        // Sayfa görünürlüğü değiştiğinde oynatıcı durduruluyor
         document.addEventListener('visibilitychange', () => {
-            if (!document.hidden && isPlaying) {
-                audioPlayer.play();
-                console.log('Sayfa geri geldi, radyo çalmaya devam ediyor.');
+            if (document.hidden) {
+                audioPlayer.pause();
+                isPlaying = false;
+                console.log('Sayfa terk edildi, radyo durduruldu.');
             }
         });
 
