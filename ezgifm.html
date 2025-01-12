@@ -45,13 +45,12 @@
             appearance: none;
             width: 300px;
             height: 8px;
-            background-color: #b84514; /* Çubuğun arka plan rengi */
+            background: linear-gradient(to right, #b84514 0%, #b84514 var(--slider-value, 100%), #d3d3d3 var(--slider-value, 100%), #d3d3d3 100%);
             border-radius: 5px;
             outline: none;
             cursor: pointer;
         }
 
-        /* WebKit tabanlı tarayıcılar (Chrome, Safari, Edge) için */
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -63,7 +62,6 @@
             cursor: pointer;
         }
 
-        /* Mozilla Firefox için */
         .volume-slider::-moz-range-thumb {
             width: 25px;
             height: 25px;
@@ -73,7 +71,6 @@
             cursor: pointer;
         }
 
-        /* Internet Explorer için */
         .volume-slider::-ms-thumb {
             width: 25px;
             height: 25px;
@@ -163,10 +160,13 @@
             console.log('Önceki radyo açılıyor.');
         });
 
-        // Ses kontrolü
+        // Ses kontrolü ve çubuk rengini ayarlama
         volumeSlider.addEventListener('input', () => {
             audioPlayer.volume = volumeSlider.value;
             console.log(`Ses seviyesi: ${volumeSlider.value}`);
+
+            const percentage = volumeSlider.value * 100;
+            volumeSlider.style.setProperty('--slider-value', `${percentage}%`);
         });
     </script>
 </body>
