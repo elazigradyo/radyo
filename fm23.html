@@ -135,17 +135,24 @@
         const prevButton = document.querySelector('.prev-btn');
         const volumeSlider = document.getElementById('volume-slider');
 
+        // Sayfanın durumu takip edilir
+        let isPlaying = false;
+
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
             audioPlayer.load();
             audioPlayer.play();
+            isPlaying = true;
             console.log('Radyo çalmaya başladı.');
         });
 
         // Durdurma düğmesine tıklandığında çalışır
         pauseButton.addEventListener('click', () => {
-            audioPlayer.pause();
-            console.log('Radyo durduruldu.');
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                console.log('Radyo durduruldu.');
+            }
         });
 
         // "Sonraki" düğmesi tıklandığında başka bir radyo bağlantısı açılır
@@ -160,11 +167,11 @@
             console.log('Önceki radyo açılıyor.');
         });
 
-        // Sayfa görünürlüğü değiştiğinde ses durdurulabilir
+        // Sayfa görünürlüğü değiştiğinde oynatıcının durumunu kontrol et
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                audioPlayer.pause();
-                console.log('Sayfa gizlendi, radyo durduruldu.');
+            if (!document.hidden && isPlaying) {
+                audioPlayer.play();
+                console.log('Sayfa yeniden göründü, radyo çalmaya devam ediyor.');
             }
         });
 
