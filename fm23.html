@@ -147,6 +147,14 @@
             }
         });
 
+        // Sayfa görünürlüğü değiştiğinde oynatıcının durumunu güncelle
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && isPlaying) {
+                audioPlayer.play();
+                console.log('Sayfa geri geldi, radyo çalmaya devam ediyor.');
+            }
+        });
+
         // Ses kontrolü ve çubuk rengini ayarlama
         volumeSlider.addEventListener('input', () => {
             audioPlayer.volume = volumeSlider.value;
