@@ -102,36 +102,30 @@
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
         const backgroundPlayToggle = document.getElementById('background-play-toggle');
-        let allowBackgroundPlay = false;
 
-        // Checkbox değişikliği
-        backgroundPlayToggle.addEventListener('change', () => {
-            allowBackgroundPlay = backgroundPlayToggle.checked;
+        // Checkbox'ın tıklanma durumunu bağımsız yönet
+        backgroundPlayToggle.addEventListener('change', (event) => {
+            console.log('Checkbox seçildi:', event.target.checked);
         });
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
             audioPlayer.load(); // Kaynağı yeniden yükle
             audioPlayer.play(); // Güncel yayını başlat
+            console.log('Radyo çalmaya başladı.');
         });
 
         // Durdurma düğmesine tıklandığında çalışır
         pauseButton.addEventListener('click', () => {
             audioPlayer.pause(); // Yayını durdur
+            console.log('Radyo durduruldu.');
         });
 
-        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
-        document.addEventListener('visibilitychange', () => {
-            if (!allowBackgroundPlay && document.hidden) {
-                audioPlayer.pause();
-            }
-        });
-
-        // Sayfa kapatıldığında oynatmayı sıfırlar
-        window.addEventListener('unload', () => {
-            if (!allowBackgroundPlay) {
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
+        // Butonların hover ve focus durumlarını izole et
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.play-btn') && !event.target.closest('.pause-btn')) {
+                playButton.blur();
+                pauseButton.blur();
             }
         });
     </script>
