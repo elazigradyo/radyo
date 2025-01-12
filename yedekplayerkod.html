@@ -87,18 +87,13 @@
             console.log('Radyo durduruldu.');
         });
 
-        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
+        // Sayfa görünürlüğü değiştiğinde kontrol
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
-                audioPlayer.pause();
-                console.log('Sayfa gizlendi, radyo durduruldu.');
+                console.log('Sayfadan ayrıldınız, radyo çalmaya devam ediyor.');
+            } else {
+                console.log('Sayfaya geri döndünüz.');
             }
-        });
-
-        // Sayfa kapatıldığında oynatmayı sıfırlar
-        window.addEventListener('unload', () => {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
         });
     </script>
 </body>
