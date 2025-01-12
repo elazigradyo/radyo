@@ -25,10 +25,27 @@
             width: 300px;
         }
 
+        /* Logo çerçevesi */
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            border: 2px solid #2c80b0; /* Çerçeve rengi */
+            border-radius: 10px; /* Hafif yuvarlak köşeler */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Logo taşarsa gizle */
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
         /* Oynatma ve durdurma düğmeleri */
         .control-buttons {
             display: flex;
-            margin-bottom: 10px;
         }
 
         .play-btn, .pause-btn {
@@ -50,25 +67,22 @@
             outline: none;
             transform: scale(1.05);
         }
-
-        /* Şarkı başlığının görünümü */
-        .track-title {
-            margin: 10px 0;
-            font-size: 16px;
-            color: #000;
-        }
     </style>
 </head>
 <body>
     <div class="player">
+        <!-- Logo Çerçevesi -->
+        <div class="logo-container">
+            <img src="https://scontent.fadb2-2.fna.fbcdn.net/v/t39.30808-6/307104309_464189709075705_7175415314345357673_n.png?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=5dQ-JmRPFnAQ7kNvgFgnT8L&_nc_zt=23&_nc_ht=scontent.fadb2-2.fna&_nc_gid=AwFzdLmzR_5Mgn7wYjyxtZ0&oh=00_AYBe0TxnvOfXFf5oo1dOSWWp_iHwrxF19oGTCWRJbMmOpg&oe=6788C94E" alt="92.0 Radyo Hazar Logo"> <!-- LOGO_URL'i logo bağlantısı ile değiştirin -->
+        </div>
+        <!-- Oynatma ve Durdurma Düğmeleri -->
         <div class="control-buttons">
             <button class="play-btn">OYNAT</button>
             <button class="pause-btn">DURDUR</button>
         </div>
-        <div class="track-title">92.0 Radyo Hazar</div>
     </div>
 
-    <audio id="audio-player" src="https://radyohazar.canliyayinda.com:8286/stream"></audio>
+    <audio id="audio-player" src="https://radyo.yayin.com.tr:8012/stream"></audio>
     <script>
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
