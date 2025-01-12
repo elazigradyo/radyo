@@ -54,7 +54,7 @@
             margin-top: 10px;
         }
 
-        .play-btn, .pause-btn {
+        .play-btn, .pause-btn, .next-btn {
             background-color: #b84514;
             border: none;
             border-radius: 5px;
@@ -68,7 +68,8 @@
 
         /* Hover ve Focus için ortak stil */
         .play-btn:hover, .play-btn:focus,
-        .pause-btn:hover, .pause-btn:focus {
+        .pause-btn:hover, .pause-btn:focus,
+        .next-btn:hover, .next-btn:focus {
             background-color: #ba1616;
             outline: none;
             transform: scale(1.05);
@@ -137,6 +138,7 @@
             <div class="control-buttons">
                 <button class="play-btn">OYNAT</button>
                 <button class="pause-btn">DURDUR</button>
+                <button class="next-btn">SONRAKİ</button>
             </div>
         </div>
         <!-- Ses Kontrol Çubuğu -->
@@ -151,6 +153,7 @@
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
+        const nextButton = document.querySelector('.next-btn');
         const volumeSlider = document.getElementById('volume-slider');
 
         // Oynatma düğmesine tıklandığında çalışır
@@ -164,6 +167,12 @@
         pauseButton.addEventListener('click', () => {
             audioPlayer.pause();
             console.log('Radyo durduruldu.');
+        });
+
+        // "Sonraki" düğmesi tıklandığında başka bir radyo bağlantısı açılır
+        nextButton.addEventListener('click', () => {
+            window.location.href = "RADYO_LINKI"; // İlgili radyo bağlantısını buraya ekleyin
+            console.log('Sonraki radyo açılıyor.');
         });
 
         // Ses kontrolü
