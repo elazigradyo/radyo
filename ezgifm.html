@@ -57,31 +57,6 @@
             font-size: 16px;
             color: #000;
         }
-
-        /* Checkbox ve etiketin görünümü */
-        label {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            margin-top: 10px;
-            color: #000;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 10px;
-            border: 2px solid #000;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-            background-color: #fff;
-            cursor: pointer;
-        }
-
-        /* Checkbox seçildiğinde görünüm */
-        input[type="checkbox"]:checked {
-            background-color: #000;
-        }
     </style>
 </head>
 <body>
@@ -91,9 +66,6 @@
             <button class="pause-btn">DURDUR</button>
         </div>
         <div class="track-title">88.0 Ezgi FM</div>
-        <label>
-            <input type="checkbox" id="background-play-toggle"> Arka Planda Çalmaya Devam Et
-        </label>
     </div>
 
     <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
@@ -101,14 +73,6 @@
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
-        const backgroundPlayToggle = document.getElementById('background-play-toggle');
-        let allowBackgroundPlay = false;
-
-        // Checkbox durumunu bağımsız kontrol et
-        backgroundPlayToggle.addEventListener('change', () => {
-            allowBackgroundPlay = backgroundPlayToggle.checked;
-            console.log(`Checkbox seçildi mi: ${allowBackgroundPlay}`);
-        });
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
@@ -123,17 +87,9 @@
             console.log('Radyo durduruldu.');
         });
 
-        // Sayfanın boş bir yerine tıklanırsa hover ve focus durumlarını koru
-        document.addEventListener('click', (event) => {
-            if (!event.target.closest('.control-buttons') && !event.target.closest('#background-play-toggle')) {
-                playButton.blur(); // Butondan odak kaldır
-                pauseButton.blur(); // Butondan odak kaldır
-            }
-        });
-
         // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
         document.addEventListener('visibilitychange', () => {
-            if (!allowBackgroundPlay && document.hidden) {
+            if (document.hidden) {
                 audioPlayer.pause();
                 console.log('Sayfa gizlendi, radyo durduruldu.');
             }
@@ -141,10 +97,8 @@
 
         // Sayfa kapatıldığında oynatmayı sıfırlar
         window.addEventListener('unload', () => {
-            if (!allowBackgroundPlay) {
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
-            }
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
         });
     </script>
 </body>
