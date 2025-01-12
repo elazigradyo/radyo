@@ -46,6 +46,7 @@
         /* Oynatma ve durdurma düğmeleri */
         .control-buttons {
             display: flex;
+            margin-bottom: 20px;
         }
 
         .play-btn, .pause-btn {
@@ -67,18 +68,74 @@
             outline: none;
             transform: scale(1.05);
         }
+
+        /* Ses kontrol çubuğu */
+        .volume-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .volume-slider {
+            writing-mode: bt-lr; /* Dikey görünüm */
+            -webkit-appearance: slider-vertical; /* Safari uyumluluğu */
+            width: 8px;
+            height: 150px;
+            margin: 10px;
+            background-color: #9c9c9a; /* Çubuğun arka plan rengi */
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* WebKit tabanlı tarayıcılar (Chrome, Safari, Edge) için */
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px; /* Düğme genişliği */
+            height: 25px; /* Düğme yüksekliği */
+            background: #2c80b0; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Mozilla Firefox için */
+        .volume-slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #2c80b0; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Internet Explorer için */
+        .volume-slider::-ms-thumb {
+            width: 25px;
+            height: 25px;
+            background: #2c80b0; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="player">
         <!-- Logo Çerçevesi -->
         <div class="logo-container">
-            <img src="https://www.canliradyodinle.fm/wp-content/uploads/elazig-ezgi-radyo-dinle.jpg" alt="88.0 Ezgi FM Logo"> <!-- LOGO_URL'i logo bağlantısı ile değiştirin -->
+            <img src="https://www.canliradyodinle.fm/wp-content/uploads/elazig-ezgi-radyo-dinle.jpg" alt="88.0 Ezgi FM Logo">
         </div>
         <!-- Oynatma ve Durdurma Düğmeleri -->
         <div class="control-buttons">
             <button class="play-btn">OYNAT</button>
             <button class="pause-btn">DURDUR</button>
+        </div>
+        <!-- Ses Kontrol Çubuğu -->
+        <div class="volume-control">
+            <label for="volume-slider">Ses</label>
+            <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="1">
         </div>
     </div>
 
@@ -87,6 +144,7 @@
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
+        const volumeSlider = document.getElementById('volume-slider');
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
@@ -99,6 +157,12 @@
         pauseButton.addEventListener('click', () => {
             audioPlayer.pause();
             console.log('Radyo durduruldu.');
+        });
+
+        // Ses kontrolü
+        volumeSlider.addEventListener('input', () => {
+            audioPlayer.volume = volumeSlider.value;
+            console.log(`Ses seviyesi: ${volumeSlider.value}`);
         });
 
         // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
