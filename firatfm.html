@@ -5,42 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>89.2 Radyo Fırat</title>
     <style>
+        /* Sayfa düzeni ve genel görünüm */
         body {
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f1f3f4;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
         }
-        audio {
+
+        /* Player kutusunun görünümü */
+        .player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
             width: 300px;
         }
-        /* Yayın akış sürgüsünü gizleme */
-        audio::-webkit-media-controls-timeline {
-            display: none;
+
+        /* Oynatma ve durdurma düğmeleri */
+        .control-buttons {
+            display: flex;
+            margin-bottom: 10px;
         }
-        audio::-moz-range-track {
-            display: none;
+
+        .play-btn, .pause-btn {
+            background-color: #2c80b0;
+            border: none;
+            border-radius: 5px;
+            color: #fefefe;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
-        audio::-ms-track {
-            display: none;
+
+        /* Hover ve Focus için ortak stil */
+        .play-btn:hover, .play-btn:focus,
+        .pause-btn:hover, .pause-btn:focus {
+            background-color: #ba1616;
+            outline: none;
+            transform: scale(1.05);
         }
-        /* Oynatma sırasında görünen süreyi gizleme */
-        audio::-webkit-media-controls-current-time-display,
-        audio::-webkit-media-controls-time-remaining-display {
-            display: none;
-        }
-        audio::-moz-media-controls-current-time-display,
-        audio::-moz-media-controls-time-remaining-display {
-            display: none;
+
+        /* Şarkı başlığının görünümü */
+        .track-title {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #000;
         }
     </style>
 </head>
 <body>
-    <audio controls>
-        <source src="https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3" type="audio/mpeg">
-        Tarayıcınız bu ses oynatıcısını desteklemiyor.
-    </audio>
+    <div class="player">
+        <div class="control-buttons">
+            <button class="play-btn">OYNAT</button>
+            <button class="pause-btn">DURDUR</button>
+        </div>
+        <div class="track-title">89.2 Radyo Fırat</div>
+    </div>
+
+    <audio id="audio-player" src="https://listen.powerapp.com.tr/radyofirat/mpeg/icecast.audio?/;stream.mp3"></audio>
+    <script>
+        const audioPlayer = document.getElementById('audio-player');
+        const playButton = document.querySelector('.play-btn');
+        const pauseButton = document.querySelector('.pause-btn');
+
+        // Oynatma düğmesine tıklandığında çalışır
+        playButton.addEventListener('click', () => {
+            audioPlayer.load();
+            audioPlayer.play();
+            console.log('Radyo çalmaya başladı.');
+        });
+
+        // Durdurma düğmesine tıklandığında çalışır
+        pauseButton.addEventListener('click', () => {
+            audioPlayer.pause();
+            console.log('Radyo durduruldu.');
+        });
+
+        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                audioPlayer.pause();
+                console.log('Sayfa gizlendi, radyo durduruldu.');
+            }
+        });
+
+        // Sayfa kapatıldığında oynatmayı sıfırlar
+        window.addEventListener('unload', () => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
+        });
+    </script>
 </body>
 </html>
