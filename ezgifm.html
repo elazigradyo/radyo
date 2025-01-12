@@ -98,27 +98,41 @@
 
     <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
     <script>
+        const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
         const backgroundPlayToggle = document.getElementById('background-play-toggle');
+        let allowBackgroundPlay = false;
 
-        // Checkbox'a tıklanıldığında odak kontrolü
-        backgroundPlayToggle.addEventListener('click', () => {
-            // Odak sırasını manuel olarak kontrol et
-            playButton.blur(); // Odak sırasını butonlardan kaldır
-            setTimeout(() => {
-                playButton.focus(); // Tekrar butona odaklan
-            }, 0);
+        // Checkbox değişikliği
+        backgroundPlayToggle.addEventListener('change', () => {
+            allowBackgroundPlay = backgroundPlayToggle.checked;
         });
 
-        // Oynatma düğmesine tıklandığında
+        // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            console.log('Oynatıldı');
+            audioPlayer.load(); // Kaynağı yeniden yükle
+            audioPlayer.play(); // Güncel yayını başlat
         });
 
-        // Durdurma düğmesine tıklandığında
+        // Durdurma düğmesine tıklandığında çalışır
         pauseButton.addEventListener('click', () => {
-            console.log('Durduruldu');
+            audioPlayer.pause(); // Yayını durdur
+        });
+
+        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
+        document.addEventListener('visibilitychange', () => {
+            if (!allowBackgroundPlay && document.hidden) {
+                audioPlayer.pause();
+            }
+        });
+
+        // Sayfa kapatıldığında oynatmayı sıfırlar
+        window.addEventListener('unload', () => {
+            if (!allowBackgroundPlay) {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
+            }
         });
     </script>
 </body>
