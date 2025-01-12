@@ -107,7 +107,7 @@
     <div class="player">
         <!-- Logo -->
         <div class="logo-container">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEipqgAJiIM4slffLg2bN3YnFC0UmnFZZMSlRMpkJxherCZiUuvhqhtV_JkOVcYjCC7ez6h2RNXYkGfAbVDtpwDSxdrgTYhR79bILenCqlNeqmDAIvML5xyUpSEa1adG_hYWIYyuXcmTlsoA/s320/radyo-kulup-elazig.png" alt="88.0 Ezgi FM Logo">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEipqgAJiIM4slffLg2bN3YnFC0UmnFZZMSlRMpkJxherCZiUuvhqhtV_JkOVcYjCC7ez6h2RNXYkGfAbVDtpwDSxdrgTYhR79bILenCqlNeqmDAIvML5xyUpSEa1adG_hYWIYyuXcmTlsoA/s320/radyo-kulup-elazig.png" alt="96.0 Radyo Kulüp">
         </div>
 
         <!-- Ses Kontrol -->
@@ -120,7 +120,7 @@
         </div>
     </div>
 
-    <audio id="https://radyodinle1.turkhosted.com/yayin?uri=radyokulup.canliyayinda.com:8282/&tkn=ATTjL-bIhncKjTYb9qx0EA&tms=1736818881"></audio>
+    <audio id="audio-player" src="https://radyodinle1.turkhosted.com/yayin?uri=radyokulup.canliyayinda.com:8282/&tkn=ATTjL-bIhncKjTYb9qx0EA&tms=1736818881"></audio>
     <script>
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
@@ -132,9 +132,12 @@
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            audioPlayer.play();
-            isPlaying = true;
-            console.log('Radyo çalmaya başladı.');
+            if (!isPlaying) {
+                audioPlayer.load(); // Player'ı yeniden yükle
+                audioPlayer.play();
+                isPlaying = true;
+                console.log('Radyo çalmaya başladı.');
+            }
         });
 
         // Durdurma düğmesine tıklandığında çalışır
