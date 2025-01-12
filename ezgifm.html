@@ -19,6 +19,7 @@
         /* Player kutusunun görünümü */
         .player {
             display: flex;
+            flex-direction: column;
             align-items: center;
             padding: 20px;
         }
@@ -28,7 +29,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
 
         /* Logo çerçevesi */
@@ -52,10 +52,12 @@
         /* Oynatma ve durdurma düğmeleri */
         .control-buttons {
             display: flex;
-            margin-top: 10px;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
-        .play-btn, .pause-btn, .next-btn {
+        .play-btn, .pause-btn, .next-btn, .prev-btn {
             background-color: #b84514;
             border: none;
             border-radius: 5px;
@@ -63,14 +65,14 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            margin-right: 10px;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         /* Hover ve Focus için ortak stil */
         .play-btn:hover, .play-btn:focus,
         .pause-btn:hover, .pause-btn:focus,
-        .next-btn:hover, .next-btn:focus {
+        .next-btn:hover, .next-btn:focus,
+        .prev-btn:hover, .prev-btn:focus {
             background-color: #ba1616;
             outline: none;
             transform: scale(1.05);
@@ -81,8 +83,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            margin-left: 20px;
+            margin-top: 20px;
         }
 
         .volume-slider {
@@ -91,7 +92,7 @@
             width: 8px;
             height: 150px;
             margin: 10px;
-            background-color: #9c9c9a; /* Çubuğun arka plan rengi */
+            background-color: #b84514; /* Çubuğun arka plan rengi */
             border-radius: 5px;
             outline: none;
             cursor: pointer;
@@ -103,7 +104,7 @@
             appearance: none;
             width: 25px; /* Düğme genişliği */
             height: 25px; /* Düğme yüksekliği */
-            background: #2c80b0; /* Düğme rengi */
+            background: #b84514; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
             cursor: pointer;
@@ -113,7 +114,7 @@
         .volume-slider::-moz-range-thumb {
             width: 25px;
             height: 25px;
-            background: #2c80b0; /* Düğme rengi */
+            background: #b84514; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
             cursor: pointer;
@@ -123,7 +124,7 @@
         .volume-slider::-ms-thumb {
             width: 25px;
             height: 25px;
-            background: #2c80b0; /* Düğme rengi */
+            background: #b84514; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
             cursor: pointer;
@@ -139,6 +140,7 @@
             </div>
             <div class="control-buttons">
                 <button class="play-btn">OYNAT</button>
+                <button class="prev-btn">ÖNCEKİ</button>
                 <button class="pause-btn">DURDUR</button>
                 <button class="next-btn">SONRAKİ</button>
             </div>
@@ -156,6 +158,7 @@
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
         const nextButton = document.querySelector('.next-btn');
+        const prevButton = document.querySelector('.prev-btn');
         const volumeSlider = document.getElementById('volume-slider');
 
         // Oynatma düğmesine tıklandığında çalışır
@@ -173,8 +176,14 @@
 
         // "Sonraki" düğmesi tıklandığında başka bir radyo bağlantısı açılır
         nextButton.addEventListener('click', () => {
-            window.location.href = "RADYO_LINKI"; // İlgili radyo bağlantısını buraya ekleyin
+            window.location.href = "https://yereldakika.github.io/radyo/fm23.html"; // İlgili radyo bağlantısını buraya ekleyin
             console.log('Sonraki radyo açılıyor.');
+        });
+
+        // "Önceki" düğmesi tıklandığında başka bir radyo bağlantısı açılır
+        prevButton.addEventListener('click', () => {
+            window.location.href = "https://yereldakika.github.io/radyo/hitfm.html"; // İlgili radyo bağlantısını buraya ekleyin
+            console.log('Önceki radyo açılıyor.');
         });
 
         // Ses kontrolü
