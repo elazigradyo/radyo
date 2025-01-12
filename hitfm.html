@@ -107,7 +107,7 @@
     <div class="player">
         <!-- Logo -->
         <div class="logo-container">
-            <img src="https://www.kreactif.com/photo/images/logolar/hit-fm-elazig-logo.jpg" alt="88.0 Ezgi FM Logo">
+            <img src="https://www.kreactif.com/photo/images/logolar/hit-fm-elazig-logo.jpg" alt="99.9 Hit FM">
         </div>
 
         <!-- Ses Kontrol -->
@@ -120,7 +120,7 @@
         </div>
     </div>
 
-    <audio id="https://radyodinle1.turkhosted.com/yayin?uri=yayin.turkiletisim.com.tr:1094/&tkn=UIwJ1qmWYVf8oeaKDAbRKQ&tms=1736818740"></audio> 
+    <audio id="audio-player" src="https://radyodinle1.turkhosted.com/yayin?uri=yayin.turkiletisim.com.tr:1094/&tkn=UIwJ1qmWYVf8oeaKDAbRKQ&tms=1736818740"></audio>
     <script>
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
@@ -132,9 +132,12 @@
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            audioPlayer.play();
-            isPlaying = true;
-            console.log('Radyo çalmaya başladı.');
+            if (!isPlaying) {
+                audioPlayer.load(); // Player'ı yeniden yükle
+                audioPlayer.play();
+                isPlaying = true;
+                console.log('Radyo çalmaya başladı.');
+            }
         });
 
         // Durdurma düğmesine tıklandığında çalışır
