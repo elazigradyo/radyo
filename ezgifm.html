@@ -118,12 +118,6 @@
             <button class="control-btn play-btn">OYNAT</button>
             <button class="control-btn pause-btn">DURDUR</button>
         </div>
-
-        <!-- Önceki ve Sonraki Butonları -->
-        <div class="control-row">
-            <button class="control-btn prev-btn">ÖNCEKİ</button>
-            <button class="control-btn next-btn">SONRAKİ</button>
-        </div>
     </div>
 
     <audio id="audio-player" src="https://sslyayin.netyayin.net/elazigezgiradyo/stream/;stream.mp3"></audio>
@@ -131,33 +125,34 @@
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
-        const nextButton = document.querySelector('.next-btn');
-        const prevButton = document.querySelector('.prev-btn');
         const volumeSlider = document.getElementById('volume-slider');
+
+        // Sayfanın durumu takip edilir
+        let isPlaying = false;
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
             audioPlayer.load();
             audioPlayer.play();
+            isPlaying = true;
             console.log('Radyo çalmaya başladı.');
         });
 
         // Durdurma düğmesine tıklandığında çalışır
         pauseButton.addEventListener('click', () => {
-            audioPlayer.pause();
-            console.log('Radyo durduruldu.');
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                console.log('Radyo durduruldu.');
+            }
         });
 
-        // "Sonraki" düğmesi tıklandığında başka bir radyo bağlantısı açılır
-        nextButton.addEventListener('click', () => {
-            window.location.href = "https://yereldakika.github.io/radyo/fm23.html"; // İlgili radyo bağlantısını buraya ekleyin
-            console.log('Sonraki radyo açılıyor.');
-        });
-
-        // "Önceki" düğmesi tıklandığında başka bir radyo bağlantısı açılır
-        prevButton.addEventListener('click', () => {
-            window.location.href = "https://yereldakika.github.io/radyo/hitfm.html"; // İlgili radyo bağlantısını buraya ekleyin
-            console.log('Önceki radyo açılıyor.');
+        // Sayfa görünürlüğü değiştiğinde oynatıcının durumunu güncelle
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && isPlaying) {
+                audioPlayer.play();
+                console.log('Sayfa geri geldi, radyo çalmaya devam ediyor.');
+            }
         });
 
         // Ses kontrolü ve çubuk rengini ayarlama
