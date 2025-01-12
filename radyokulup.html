@@ -21,15 +21,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            width: 300px;
+            gap: 20px;
         }
 
-        /* Logo çerçevesi */
         .logo-container {
             width: 200px;
             height: 200px;
-            margin-bottom: 20px;
             border: 0px solid #2c80b0; /* Çerçeve rengi */
             border-radius: 10px; /* Hafif yuvarlak köşeler */
             display: flex;
@@ -43,12 +40,53 @@
             max-height: 100%;
         }
 
-        /* Oynatma ve durdurma düğmeleri */
-        .control-buttons {
-            display: flex;
+        .volume-slider {
+            -webkit-appearance: none; /* Safari uyumluluğu */
+            appearance: none;
+            width: 300px;
+            height: 8px;
+            background: linear-gradient(to right, #b84514 0%, #b84514 var(--slider-value, 100%), #d3d3d3 var(--slider-value, 100%), #d3d3d3 100%);
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
         }
 
-        .play-btn, .pause-btn {
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px; /* Düğme genişliği */
+            height: 25px; /* Düğme yüksekliği */
+            background: #b84514; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #b84514; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        .volume-slider::-ms-thumb {
+            width: 25px;
+            height: 25px;
+            background: #b84514; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .control-btn {
             background-color: #b84514;
             border: none;
             border-radius: 5px;
@@ -56,64 +94,75 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            margin-right: 10px;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        /* Hover ve Focus için ortak stil */
-        .play-btn:hover, .play-btn:focus,
-        .pause-btn:hover, .pause-btn:focus {
+        .control-btn:hover {
             background-color: #ba1616;
-            outline: none;
             transform: scale(1.05);
         }
     </style>
 </head>
 <body>
     <div class="player">
-        <!-- Logo Çerçevesi -->
+        <!-- Logo -->
         <div class="logo-container">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEipqgAJiIM4slffLg2bN3YnFC0UmnFZZMSlRMpkJxherCZiUuvhqhtV_JkOVcYjCC7ez6h2RNXYkGfAbVDtpwDSxdrgTYhR79bILenCqlNeqmDAIvML5xyUpSEa1adG_hYWIYyuXcmTlsoA/s320/radyo-kulup-elazig.png" alt="96.0 Radyo Kulüp Logo"> <!-- LOGO_URL'i logo bağlantısı ile değiştirin -->
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEipqgAJiIM4slffLg2bN3YnFC0UmnFZZMSlRMpkJxherCZiUuvhqhtV_JkOVcYjCC7ez6h2RNXYkGfAbVDtpwDSxdrgTYhR79bILenCqlNeqmDAIvML5xyUpSEa1adG_hYWIYyuXcmTlsoA/s320/radyo-kulup-elazig.png" alt="88.0 Ezgi FM Logo">
         </div>
-        <!-- Oynatma ve Durdurma Düğmeleri -->
-        <div class="control-buttons">
-            <button class="play-btn">OYNAT</button>
-            <button class="pause-btn">DURDUR</button>
+
+        <!-- Ses Kontrol -->
+        <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="1">
+
+        <!-- Oynat ve Durdur Butonları -->
+        <div class="control-row">
+            <button class="control-btn play-btn">OYNAT</button>
+            <button class="control-btn pause-btn">DURDUR</button>
         </div>
     </div>
 
-    <audio id="audio-player" src="
-https://radyodinle1.turkhosted.com/yayin?uri=radyokulup.canliyayinda.com:8282/&tkn=ATTjL-bIhncKjTYb9qx0EA&tms=1736818881"></audio>
+    <audio id="https://radyodinle1.turkhosted.com/yayin?uri=radyokulup.canliyayinda.com:8282/&tkn=ATTjL-bIhncKjTYb9qx0EA&tms=1736818881"></audio>
+    
     <script>
         const audioPlayer = document.getElementById('audio-player');
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
+        const volumeSlider = document.getElementById('volume-slider');
+
+        // Sayfanın durumu takip edilir
+        let isPlaying = false;
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            audioPlayer.load();
             audioPlayer.play();
+            isPlaying = true;
             console.log('Radyo çalmaya başladı.');
         });
 
         // Durdurma düğmesine tıklandığında çalışır
         pauseButton.addEventListener('click', () => {
-            audioPlayer.pause();
-            console.log('Radyo durduruldu.');
-        });
-
-        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
+            if (isPlaying) {
                 audioPlayer.pause();
-                console.log('Sayfa gizlendi, radyo durduruldu.');
+                isPlaying = false;
+                console.log('Radyo durduruldu.');
             }
         });
 
-        // Sayfa kapatıldığında oynatmayı sıfırlar
-        window.addEventListener('unload', () => {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
+        // Sayfa görünürlüğü değiştiğinde oynatıcı durduruluyor
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                audioPlayer.pause();
+                isPlaying = false;
+                console.log('Sayfa terk edildi, radyo durduruldu.');
+            }
+        });
+
+        // Ses kontrolü ve çubuk rengini ayarlama
+        volumeSlider.addEventListener('input', () => {
+            audioPlayer.volume = volumeSlider.value;
+            console.log(`Ses seviyesi: ${volumeSlider.value}`);
+
+            const percentage = volumeSlider.value * 100;
+            volumeSlider.style.setProperty('--slider-value', `${percentage}%`);
         });
     </script>
 </body>
