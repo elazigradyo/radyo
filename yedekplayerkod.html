@@ -3,21 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embed Audio</title>
+    <title>Custom YouTube Audio Player</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        .controls button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+        }
+        .controls button:hover {
+            background-color: #0056b3;
+        }
         iframe {
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            position: absolute;
+            display: none; /* YouTube iframe'i tamamen gizli */
         }
     </style>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <iframe 
-        src="https://www.youtube.com/embed/videoseries?list=PLY0hgS7SsMikSGZmsd6qPIe_wwqapFm8d&autoplay=1&mute=0&loop=1" 
-        title="YouTube Audio Player" 
-        allow="autoplay">
-    </iframe>
+    <h1>YouTube Playlist Audio Player</h1>
+    <div class="controls">
+        <button id="playPause">Oynat</button>
+        <button id="prev">Önceki</button>
+        <button id="next">Sonraki</button>
+    </div>
+
+    <!-- YouTube Player -->
+    <div id="player"></div>
+
+    <script>
+        let player;
+        let isPlaying = false;
+
+        // YouTube API hazır olduğunda çalıştırılacak fonksiyon
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', // Videoyu gizlemek için
+                width: '0',
+                videoId: '', // Playlist'in ilk videosu boş bırakılabilir
+                playerVars: {
+                    listType: 'playlist',
+                    list: 'PLY0hgS7SsMikSGZmsd6qPIe_wwqapFm8d', // Playlist ID
+                    autoplay: 0, // Otomatik oynatma başlangıçta kapalı
+                    controls: 0, // YouTube kontrolleri devre dışı
+                    modestbranding: 1, // YouTube logosunu gizler
+                    rel: 0 // Benzer videoları gösterme
+                },
+                events: {
+                    onReady: function (event) {
+                        console.log('Player is ready');
+                    }
+                }
+            });
+        }
+
+        // Oynat/Duraklat butonu işlevi
+        document.getElementById('playPause').addEventListener('click', function () {
+            if (isPlaying) {
+                player.pauseVideo();
+                this.textContent = 'Oynat';
+            } else {
+                player.playVideo();
+                this.textContent = 'Duraklat';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Önceki butonu işlevi
+        document.getElementById('prev').addEventListener('click', function () {
+            player.previousVideo();
+        });
+
+        // Sonraki butonu işlevi
+        document.getElementById('next').addEventListener('click', function () {
+            player.nextVideo();
+        });
+    </script>
 </body>
 </html>
