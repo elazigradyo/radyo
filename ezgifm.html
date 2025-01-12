@@ -102,30 +102,47 @@
         const playButton = document.querySelector('.play-btn');
         const pauseButton = document.querySelector('.pause-btn');
         const backgroundPlayToggle = document.getElementById('background-play-toggle');
+        let allowBackgroundPlay = false;
 
-        // Checkbox'ın tıklanma durumunu bağımsız yönet
-        backgroundPlayToggle.addEventListener('change', (event) => {
-            console.log('Checkbox seçildi:', event.target.checked);
+        // Checkbox durumunu bağımsız kontrol et
+        backgroundPlayToggle.addEventListener('change', () => {
+            allowBackgroundPlay = backgroundPlayToggle.checked;
+            console.log(`Checkbox seçildi mi: ${allowBackgroundPlay}`);
         });
 
         // Oynatma düğmesine tıklandığında çalışır
         playButton.addEventListener('click', () => {
-            audioPlayer.load(); // Kaynağı yeniden yükle
-            audioPlayer.play(); // Güncel yayını başlat
+            audioPlayer.load();
+            audioPlayer.play();
             console.log('Radyo çalmaya başladı.');
         });
 
         // Durdurma düğmesine tıklandığında çalışır
         pauseButton.addEventListener('click', () => {
-            audioPlayer.pause(); // Yayını durdur
+            audioPlayer.pause();
             console.log('Radyo durduruldu.');
         });
 
-        // Butonların hover ve focus durumlarını izole et
-        document.addEventListener('click', (event) => {
-            if (!event.target.closest('.play-btn') && !event.target.closest('.pause-btn')) {
-                playButton.blur();
-                pauseButton.blur();
+        // Checkbox odak sırasını etkisizleştir
+        backgroundPlayToggle.addEventListener('click', () => {
+            setTimeout(() => {
+                playButton.focus(); // Odak tekrar "OYNAT" butonuna döner
+            }, 0);
+        });
+
+        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
+        document.addEventListener('visibilitychange', () => {
+            if (!allowBackgroundPlay && document.hidden) {
+                audioPlayer.pause();
+                console.log('Sayfa gizlendi, radyo durduruldu.');
+            }
+        });
+
+        // Sayfa kapatıldığında oynatmayı sıfırlar
+        window.addEventListener('unload', () => {
+            if (!allowBackgroundPlay) {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
             }
         });
     </script>
