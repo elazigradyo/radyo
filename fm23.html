@@ -160,6 +160,14 @@
             console.log('Önceki radyo açılıyor.');
         });
 
+        // Sayfa görünürlüğü değiştiğinde ses durdurulabilir
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                audioPlayer.pause();
+                console.log('Sayfa gizlendi, radyo durduruldu.');
+            }
+        });
+
         // Ses kontrolü ve çubuk rengini ayarlama
         volumeSlider.addEventListener('input', () => {
             audioPlayer.volume = volumeSlider.value;
