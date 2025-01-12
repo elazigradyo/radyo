@@ -58,7 +58,7 @@
             -webkit-appearance: slider-vertical; /* Safari uyumluluğu */
             width: 8px;
             height: 150px;
-            background-color: #9c9c9a; /* Çubuğun arka plan rengi */
+            background-color: #b84514; /* Çubuğun arka plan rengi */
             border-radius: 5px;
             outline: none;
             cursor: pointer;
@@ -68,12 +68,39 @@
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 25px; /* Düğme genişliği */
-            height: 25px; /* Düğme yüksekliği */
-            background: #2c80b0; /* Düğme rengi */
+            width: 35px; /* Düğme genişliği */
+            height: 35px; /* Düğme yüksekliği */
+            background: #b84514; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
             cursor: pointer;
+        }
+
+        /* Mozilla Firefox için */
+        .volume-slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #b84514; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        /* Internet Explorer için */
+        .volume-slider::-ms-thumb {
+            width: 25px;
+            height: 25px;
+            background: #b84514; /* Düğme rengi */
+            border-radius: 50%; /* Yuvarlak düğme */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            cursor: pointer;
+        }
+
+        .volume-slider::-ms-track {
+            width: 100%;
+            background: transparent; /* Çubuğun arka planı */
+            border-color: transparent;
+            color: transparent;
         }
 
         /* Kontroller */
