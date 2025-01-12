@@ -123,11 +123,12 @@
             console.log('Radyo durduruldu.');
         });
 
-        // Checkbox odak sırasını etkisizleştir
-        backgroundPlayToggle.addEventListener('click', () => {
-            setTimeout(() => {
-                playButton.focus(); // Odak tekrar "OYNAT" butonuna döner
-            }, 0);
+        // Sayfanın boş bir yerine tıklanırsa hover ve focus durumlarını koru
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.control-buttons') && !event.target.closest('#background-play-toggle')) {
+                playButton.blur(); // Butondan odak kaldır
+                pauseButton.blur(); // Butondan odak kaldır
+            }
         });
 
         // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
