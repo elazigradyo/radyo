@@ -60,14 +60,17 @@
                 playerVars: {
                     listType: 'playlist',
                     list: 'PLY0hgS7SsMikSGZmsd6qPIe_wwqapFm8d', // Playlist ID
-                    autoplay: 0, // Otomatik oynatma devre dışı
+                    autoplay: 0, // Otomatik oynatma kapalı
                     controls: 1, // YouTube varsayılan kontrolleri açık
                     modestbranding: 1, // Küçük bir YouTube logosu
                     rel: 0 // Benzer videoları gösterme
                 },
                 events: {
-                    onReady: function () {
-                        console.log('Player is ready');
+                    onReady: function (event) {
+                        console.log('YouTube Player is ready');
+                    },
+                    onError: function (error) {
+                        console.error('Error occurred:', error);
                     }
                 }
             });
