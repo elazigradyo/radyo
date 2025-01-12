@@ -21,21 +21,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            gap: 20px;
         }
 
-        /* Logo ve kontrolleri içeren dikey düzen */
-        .main-controls {
+        /* Logo ve ses düzey çubuğu */
+        .top-section {
             display: flex;
-            flex-direction: column;
             align-items: center;
+            gap: 20px;
         }
 
-        /* Logo çerçevesi */
         .logo-container {
             width: 200px;
             height: 200px;
-            margin-bottom: 20px;
             border: 0px solid #2c80b0; /* Çerçeve rengi */
             border-radius: 10px; /* Hafif yuvarlak köşeler */
             display: flex;
@@ -49,41 +47,10 @@
             max-height: 100%;
         }
 
-        /* Oynatma ve durdurma düğmeleri */
-        .control-buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .play-btn, .pause-btn, .next-btn, .prev-btn {
-            background-color: #b84514;
-            border: none;
-            border-radius: 5px;
-            color: #fefefe;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        /* Hover ve Focus için ortak stil */
-        .play-btn:hover, .play-btn:focus,
-        .pause-btn:hover, .pause-btn:focus,
-        .next-btn:hover, .next-btn:focus,
-        .prev-btn:hover, .prev-btn:focus {
-            background-color: #ba1616;
-            outline: none;
-            transform: scale(1.05);
-        }
-
-        /* Ses kontrol çubuğu */
         .volume-control {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 20px;
         }
 
         .volume-slider {
@@ -91,8 +58,7 @@
             -webkit-appearance: slider-vertical; /* Safari uyumluluğu */
             width: 8px;
             height: 150px;
-            margin: 10px;
-            background-color: #b84514; /* Çubuğun arka plan rengi */
+            background-color: #9c9c9a; /* Çubuğun arka plan rengi */
             border-radius: 5px;
             outline: none;
             cursor: pointer;
@@ -104,51 +70,59 @@
             appearance: none;
             width: 25px; /* Düğme genişliği */
             height: 25px; /* Düğme yüksekliği */
-            background: #b84514; /* Düğme rengi */
+            background: #2c80b0; /* Düğme rengi */
             border-radius: 50%; /* Yuvarlak düğme */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
             cursor: pointer;
         }
 
-        /* Mozilla Firefox için */
-        .volume-slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            background: #b84514; /* Düğme rengi */
-            border-radius: 50%; /* Yuvarlak düğme */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
-            cursor: pointer;
+        /* Kontroller */
+        .control-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
-        /* Internet Explorer için */
-        .volume-slider::-ms-thumb {
-            width: 25px;
-            height: 25px;
-            background: #b84514; /* Düğme rengi */
-            border-radius: 50%; /* Yuvarlak düğme */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+        .control-btn {
+            background-color: #b84514;
+            border: none;
+            border-radius: 5px;
+            color: #fefefe;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background-color: #ba1616;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
     <div class="player">
-        <!-- Logo ve Kontroller -->
-        <div class="main-controls">
+        <!-- Logo ve Ses Kontrol -->
+        <div class="top-section">
             <div class="logo-container">
                 <img src="https://www.canliradyodinle.fm/wp-content/uploads/elazig-ezgi-radyo-dinle.jpg" alt="88.0 Ezgi FM Logo">
             </div>
-            <div class="control-buttons">
-                <button class="play-btn">OYNAT</button>
-                <button class="prev-btn">ÖNCEKİ</button>
-                <button class="pause-btn">DURDUR</button>
-                <button class="next-btn">SONRAKİ</button>
+            <div class="volume-control">
+                <label for="volume-slider">Ses</label>
+                <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="1">
             </div>
         </div>
-        <!-- Ses Kontrol Çubuğu -->
-        <div class="volume-control">
-            <label for="volume-slider">Ses</label>
-            <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="1">
+
+        <!-- Oynat ve Durdur Butonları -->
+        <div class="control-row">
+            <button class="control-btn play-btn">OYNAT</button>
+            <button class="control-btn pause-btn">DURDUR</button>
+        </div>
+
+        <!-- Önceki ve Sonraki Butonları -->
+        <div class="control-row">
+            <button class="control-btn prev-btn">ÖNCEKİ</button>
+            <button class="control-btn next-btn">SONRAKİ</button>
         </div>
     </div>
 
@@ -190,20 +164,6 @@
         volumeSlider.addEventListener('input', () => {
             audioPlayer.volume = volumeSlider.value;
             console.log(`Ses seviyesi: ${volumeSlider.value}`);
-        });
-
-        // Sayfa görünürlüğü değiştiğinde oynatma kontrolü
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                audioPlayer.pause();
-                console.log('Sayfa gizlendi, radyo durduruldu.');
-            }
-        });
-
-        // Sayfa kapatıldığında oynatmayı sıfırlar
-        window.addEventListener('unload', () => {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0; // Çalma konumunu sıfırla
         });
     </script>
 </body>
